@@ -1,4 +1,4 @@
-name: Test and Lint swa-sandbox-ui
+name: publish-demo-app-coverage
 on:
   push:
     branches: [ main ]
