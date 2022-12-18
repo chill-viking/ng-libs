@@ -10,10 +10,7 @@ export default {
     },
   },
   coverageDirectory: '../../coverage/chill-viking-ng-libs',
-  coverageReporters: [
-    ['lcov', { projectRoot: 'apps/chill-viking-ng-libs' }],
-    ['text', { skipFull: true }],
-  ],
+  coverageReporters: [['lcov'], ['text', { skipFull: true }]],
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },
