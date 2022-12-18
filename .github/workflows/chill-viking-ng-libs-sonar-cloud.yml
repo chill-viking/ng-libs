@@ -2,13 +2,9 @@ name: publish-demo-app-coverage
 on:
   push:
     branches: [main]
-    paths:
-      - apps/chill-viking-ng-libs/**
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened]
-    paths:
-      - apps/chill-viking-ng-libs/**
 
 permissions: read-all
 
