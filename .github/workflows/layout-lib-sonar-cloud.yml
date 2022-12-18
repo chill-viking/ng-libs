@@ -1,0 +1,73 @@
+name: publish-layout-lib-coverage
+on:
+  push:
+    branches: [main]
+    paths:
+      - libs/layout/**
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - libs/layout/**
+
+env:
+  SONAR_TOKEN: ${{ secrets.LAYOUT_LIB_SONAR_TOKEN }}
+  COVERAGE_LOCATION: 'coverage/lcov.info'
+  CONFIG_LOCATION: 'tsconfig.lib.json'
+  NX_PROJECT: 'layout'
+  PROJECT_BASE: 'libs/layout'
+
+jobs:
+  main:
+    name: test, build, and publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: nrwl/nx-set-shas@v3
+      - name: Cache node modules
+        id: cache-nodemodules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          # caching node_modules
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install Dependencies
+        if: steps.cache-nodemodules.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - run: npx nx run ${{ env.NX_PROJECT }}:test --parallel=3 --ci --code-coverage
+        name: Test chill-viking-ng-libs
+      - run: npx nx run ${{ env.NX_PROJECT }}:build --parallel=3
+        name: Build chill-viking-ng-libs
+
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@main
+        with:
+          path: ${{ env.PROJECT_BASE }}
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: ${{ env.PROJECT_BASE }}
+          args: >
+            -Dsonar.javascript.lcov.reportPaths=${{ env.COVERAGE_LOCATION }}
+            -Dsonar.typescript.tsconfigPaths=${{ env.CONFIG_LOCATION }}
+            -Dsonar.projectVersion=${{ steps.package-version.outputs.current-version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
