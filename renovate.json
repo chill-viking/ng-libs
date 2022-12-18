@@ -1,0 +1,25 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["eslint"],
+      "labels": ["linting"]
+    },
+    {
+      "matchDepTypes": ["optionalDependencies"],
+      "addLabels": ["optional"]
+    }
+  ],
+  "schedule": [
+    "before 2am"
+  ],
+  "configMigration": true,
+  "dependencyDashboardTitle": "chore(deps): dependency dashboard",
+  "automerge": true,
+  "platformAutomerge": true,
+  "automergeStrategy": "rebase"
+}
