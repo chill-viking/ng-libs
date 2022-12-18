@@ -8,15 +8,15 @@ on:
 
 env:
   SONAR_ORG: 'chill-viking-org'
-  SONAR_PROJECT: 'chill-viking_ng-libs-demo-app'
-  SONAR_TOKEN: ${{ secrets.DEMO_APP_SONAR_TOKEN }}
+  SONAR_PROJECT: 'chill-viking-org_ng-libs-demo-app'
   COVERAGE_LOCATION: 'coverage/apps/chill-viking-ng-libs/lcov.info'
   CONFIG_LOCATION: 'apps/chill-viking-ng-libs/tsconfig.app.json'
   NX_PROJECT: 'chill-viking-ng-libs'
+  PROJECT_BASE: 'apps/chill-viking-ng-libs'
 
 jobs:
   main:
-    name: lint, test, and publish
+    name: test, build, and publish
     runs-on: ubuntu-latest
     steps:
       - name: Harden Runner
@@ -54,6 +54,7 @@ jobs:
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         with:
+          projectBaseDir: ${{ env.PROJECT_BASE }}
           args: >
             -Dsonar.organization=${{ env.SONAR_ORG }}
             -Dsonar.projectKey=${{ env.SONAR_PROJECT }}
@@ -62,4 +63,4 @@ jobs:
             -Dsonar.projectVersion=1.0.0-ci
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.DEMO_APP_SONAR_TOKEN }}
