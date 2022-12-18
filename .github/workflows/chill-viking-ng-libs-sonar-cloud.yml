@@ -9,9 +9,10 @@ on:
 env:
   SONAR_ORG: 'chill-viking-org'
   SONAR_PROJECT: 'chill-viking-org_ng-libs-demo-app'
-  COVERAGE_LOCATION: 'coverage/chill-viking-ng-libs/lcov.info'
-  CONFIG_LOCATION: 'apps/chill-viking-ng-libs/tsconfig.app.json'
+  COVERAGE_LOCATION: 'coverage/lcov.info'
+  CONFIG_LOCATION: 'tsconfig.app.json'
   NX_PROJECT: 'chill-viking-ng-libs'
+  PROJECT_BASE: 'apps/chill-viking-ng-libs'
 
 jobs:
   main:
@@ -53,6 +54,7 @@ jobs:
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         with:
+          projectBaseDir: ${{ env.PROJECT_BASE }}
           args: >
             -Dsonar.organization=${{ env.SONAR_ORG }}
             -Dsonar.projectKey=${{ env.SONAR_PROJECT }}

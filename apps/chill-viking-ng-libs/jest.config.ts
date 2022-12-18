@@ -9,8 +9,8 @@ export default {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/chill-viking-ng-libs',
-  coverageReporters: [['lcov'], ['text', { skipFull: true }]],
+  coverageDirectory: 'coverage',
+  coverageReporters: [['lcov', { projectRoot: 'apps/chill-viking-ng-libs' }]],
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },
