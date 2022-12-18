@@ -7,6 +7,7 @@ on:
     types: [opened, synchronize, reopened]
 
 env:
+  SONAR_TOKEN: ${{ secrets.DEMO_APP_SONAR_TOKEN }}
   SONAR_ORG: 'chill-viking-org'
   SONAR_PROJECT: 'chill-viking-org_ng-libs-demo-app'
   COVERAGE_LOCATION: 'coverage/lcov.info'
@@ -69,4 +70,4 @@ jobs:
             -Dsonar.projectVersion=${{ steps.package-version.outputs.current-version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.DEMO_APP_SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
