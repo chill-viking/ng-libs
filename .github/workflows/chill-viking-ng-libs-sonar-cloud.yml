@@ -10,6 +10,8 @@ on:
     paths:
       - apps/chill-viking-ng-libs/**
 
+permissions: read-all
+
 env:
   SONAR_ORG: 'chill-viking-org'
   SONAR_PROJECT: 'chill-viking_ng-libs-demo-app'
@@ -23,6 +25,11 @@ jobs:
     name: lint, test, and publish
     runs-on: ubuntu-latest
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0

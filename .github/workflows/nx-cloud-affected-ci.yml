@@ -7,6 +7,8 @@ on:
     branches: ['main']
     types: [opened, synchronize, reopened]
 
+permissions: read-all
+
 jobs:
   main:
     name: Nx Cloud - Main Job

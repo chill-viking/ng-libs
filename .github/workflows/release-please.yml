@@ -2,11 +2,18 @@ on:
   push:
     branches: ['main']
 
+permissions: read-all
+
 name: release-please
 jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
       - uses: google-github-actions/release-please-action@v3
         with:
           command: manifest
