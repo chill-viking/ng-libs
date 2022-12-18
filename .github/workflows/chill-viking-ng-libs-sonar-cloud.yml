@@ -8,9 +8,6 @@ on:
 
 env:
   SONAR_TOKEN: ${{ secrets.DEMO_APP_SONAR_TOKEN }}
-  SONAR_ORG: 'chill-viking-org'
-  SONAR_PROJECT_KEY: 'chill-viking-org_ng-libs-demo-app'
-  SONAR_PROJECT_NAME: 'ng-libs | Demo App'
   COVERAGE_LOCATION: 'coverage/lcov.info'
   CONFIG_LOCATION: 'tsconfig.app.json'
   NX_PROJECT: 'chill-viking-ng-libs'
@@ -64,9 +61,6 @@ jobs:
         with:
           projectBaseDir: ${{ env.PROJECT_BASE }}
           args: >
-            -Dsonar.organization=${{ env.SONAR_ORG }}
-            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
-            -Dsonar.projectName='${{ env.SONAR_PROJECT_NAME }}'
             -Dsonar.javascript.lcov.reportPaths=${{ env.COVERAGE_LOCATION }}
             -Dsonar.typescript.tsconfigPaths=${{ env.CONFIG_LOCATION }}
             -Dsonar.projectVersion=${{ steps.package-version.outputs.current-version }}
