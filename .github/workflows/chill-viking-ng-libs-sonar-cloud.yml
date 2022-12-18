@@ -49,11 +49,14 @@ jobs:
         run: npm ci
 
       - run: npx nx run ${{ env.NX_PROJECT }}:test --parallel=3 --ci --code-coverage
+        name: Test chill-viking-ng-libs
       - run: npx nx run ${{ env.NX_PROJECT }}:build --parallel=3
+        name: Build chill-viking-ng-libs
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         with:
+          projectBaseDir: apps/chill-viking-ng-libs
           args: >
             -Dsonar.organization=${{ env.SONAR_ORG }}
             -Dsonar.projectKey=${{ env.SONAR_PROJECT }}
