@@ -1,0 +1,62 @@
+name: npm-publish-layout-alpha
+on: push
+#  push:
+#    paths:
+#      - libs/layout/**
+
+env:
+  NPM_TOKEN: ${{ secrets.ORG_NPM_TOKEN }}
+  NX_PROJECT: 'layout'
+  PROJECT_PATH: 'libs/layout'
+
+jobs:
+  #  prepare-version:
+  publish-lib:
+    name: publish alpha @chill-viking/layout
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
+      - uses: actions/checkout@v3
+
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@main
+        with:
+          path: ${{ env.PROJECT_PATH }}
+
+      - name: Cache Build Number
+        id: build-number
+        uses: actions/cache@v3
+        with:
+          path: tmp
+          key: build-${{ env.NX_PROJECT }}-${{ steps.package-version.outputs.current-version }}
+          restore-keys: build-${{ env.NX_PROJECT }}-${{ steps.package-version.outputs.current-version }}
+
+      - name: Create initial Build
+        if: steps.build-number.outputs.cache-hit != 'true'
+        run: |
+          echo ${{ env.PROJECT_NAME }}
+          echo ${{ join(steps.package-version.outputs.*, '\n') }}
+          mkdir tmp
+          echo 0 > tmp/build
+
+      - name: Increment Build
+        id: increment-build
+        run: |
+          x=$(<tmp/build)
+          y=$(($x + 1))
+          echo $y > tmp/build
+          echo "num=${y}" >> $GITHUB_OUTPUT
+
+      - uses: ./actions/publish-lib
+        name: Publish to NPM
+        with:
+          project-name: ${{ env.NX_PROJECT }}
+          project-location: ${{ env.PROJECT_PATH }}
+          project-dist-location: dist/${{ env.PROJECT_PATH }}
+          project-version: ${{ steps.package-version.outputs.current-version }}-alpha.${{ steps.increment-build.outputs.num }}
+          project-tag: 'alpha'

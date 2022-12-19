@@ -1,0 +1,40 @@
+name: publish-lib
+author: 'Peter Jokumsen'
+description: 'Composite action to publish a project'
+
+inputs:
+  project-name:
+    description: 'Project name to build'
+    required: true
+  project-location:
+    description: 'Location to find package.json of project to publish'
+    required: true
+  project-dist-location:
+    description: 'Location of compiled project'
+    required: true
+  project-version:
+    description: 'Version to use for publishing, leave blank for latest'
+    required: false
+    default: ''
+  project-tag:
+    description: 'Tag to use for publish, defaults to latest'
+    required: false
+    default: 'latest'
+
+runs:
+  using: 'composite'
+  steps:
+    - shell: pwsh
+      if: inputs.project-version != ''
+      run: |
+        echo "inside of versioning"
+      name: Set version
+
+    - shell: pwsh
+      run: |
+        echo "project-name: ${{ inputs.project-name }}"
+        echo "project-location: ${{ inputs.project-location }}"
+        echo "project-dist-location: ${{ inputs.project-dist-location }}"
+        echo "project-version: ${{ inputs.project-version }}"
+        echo "tag: ${{ inputs.project-tag }}"
+      name: Test ${{ inputs.project-name }} w/ echo
