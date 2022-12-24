@@ -34,12 +34,10 @@ jobs:
 
       - uses: ./actions/npm-ci-with-cache
 
-      - uses: nrwl/nx-set-shas@v3
-
       - name: update format
         id: format
         run: |
-          npx nx format:write
+          npx nx format:write --base=main
           changed_files=$(git status --porcelain --untracked-files=no | wc -l)
           echo "changed_files=${changed_files}" >> GITHUB_OUTPUT
 
