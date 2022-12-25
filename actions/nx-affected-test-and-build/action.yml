@@ -1,0 +1,19 @@
+name: nx-affected-test-and-build
+author: 'Peter Jokumsen'
+description: 'TBA'
+
+inputs:
+  project-name:
+    description: 'Project name to test and build'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - shell: pwsh
+      run: npx nx run ${{ inputs.project-name }}:test --parallel=3 --code-coverage
+      name: Test ${{ inputs.project-name }}
+
+    - shell: pwsh
+      run: npx nx run ${{ env.NX_PROJECT }}:build --parallel=3
+      name: Build ${{ inputs.project-name }}
