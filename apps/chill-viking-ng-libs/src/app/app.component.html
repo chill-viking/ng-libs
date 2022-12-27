@@ -1,3 +1,6 @@
-<cv-layout>
-  <h1>Welcome {{ title }}</h1>
+<cv-layout [data]="data">
+  <ng-template cvHeader let-header>
+    <h1>Welcome {{ header.title$ | async }}</h1>
+  </ng-template>
+  <p>content</p>
 </cv-layout>
