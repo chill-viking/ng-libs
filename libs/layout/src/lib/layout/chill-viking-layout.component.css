@@ -1,3 +1,17 @@
-::ng-deep body {
+body {
   margin: 0;
+}
+
+.cv-layout {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+.cv-layout-header {
+  width: 100%;
+}
+
+.cv-layout-container {
+  width: 100%;
 }

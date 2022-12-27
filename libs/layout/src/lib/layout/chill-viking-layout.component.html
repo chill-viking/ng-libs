@@ -1,3 +1,17 @@
-<div class="cv-container">
-  <ng-content></ng-content>
+<div class="cv-layout">
+  <div class="cv-layout-header">
+    <ng-container
+      *ngTemplateOutlet="
+        headerTemplate || defaultHeader;
+        context: { $implicit: data.header }
+      "
+    ></ng-container>
+  </div>
+  <div class="cv-layout-container">
+    <ng-content></ng-content>
+  </div>
 </div>
+
+<ng-template cvHeader #defaultHeader let-header>
+  <h1>{{ header.title$ | async }}</h1>
+</ng-template>
