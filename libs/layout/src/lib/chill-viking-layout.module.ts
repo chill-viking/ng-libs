@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { HeaderDirective } from './directives/header.directive';
+import { FooterDirective, HeaderDirective } from './directives';
 import { ChillVikingLayoutComponent } from './layout/chill-viking-layout.component';
-import { FooterDirective } from './directives/footer.directive';
 
 @NgModule({
   imports: [CommonModule],
