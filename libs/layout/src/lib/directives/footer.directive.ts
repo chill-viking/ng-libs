@@ -1,15 +1,5 @@
-import {
-  Directive,
-  ElementRef,
-  EmbeddedViewRef,
-  Injector,
-  TemplateRef,
-} from '@angular/core';
-import {
-  AsImplicit,
-  HeaderDirectiveTemplateContext,
-  LayoutFooterContext,
-} from '@chill-viking/layout';
+import { Directive, EmbeddedViewRef, Injector, TemplateRef } from '@angular/core';
+import { AsImplicit, LayoutFooterContext } from '@chill-viking/layout';
 
 export type FooterDirectiveTemplateContext = AsImplicit<LayoutFooterContext>;
 
@@ -17,9 +7,10 @@ export type FooterDirectiveTemplateContext = AsImplicit<LayoutFooterContext>;
   selector: 'ng-template[cvFooter]',
 })
 export class FooterDirective extends TemplateRef<FooterDirectiveTemplateContext> {
+  readonly elementRef = this._templateRef.elementRef;
+
   constructor(
     private _templateRef: TemplateRef<FooterDirectiveTemplateContext>,
-    public readonly elementRef: ElementRef,
   ) {
     super();
   }
