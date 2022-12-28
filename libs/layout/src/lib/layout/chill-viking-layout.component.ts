@@ -3,13 +3,12 @@ import {
   Component,
   ContentChild,
   Input,
-  TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
 import { of } from 'rxjs';
-import { HeaderDirective } from '../directives/header.directive';
+import { FooterDirective, HeaderDirective } from '../directives';
+import { AsImplicit } from '../models/as-implicit';
 import { LayoutContext } from '../models/layout-context';
-import { LayoutHeaderContext } from '../models/layout-header-context';
 
 @Component({
   selector: 'cv-layout',
@@ -26,6 +25,17 @@ export class ChillVikingLayoutComponent {
     },
   };
 
-  @ContentChild(HeaderDirective, { read: TemplateRef })
-  headerTemplate?: TemplateRef<LayoutHeaderContext>;
+  @ContentChild(HeaderDirective, { read: HeaderDirective })
+  headerTemplate?: HeaderDirective;
+
+  @ContentChild(FooterDirective, { read: FooterDirective })
+  footerTemplate?: FooterDirective;
+
+  get showFooter(): boolean {
+    return !!this.footerTemplate && !!this.data.footer;
+  }
+
+  getContext<T>($implicit: T): AsImplicit<T> {
+    return { $implicit };
+  }
 }

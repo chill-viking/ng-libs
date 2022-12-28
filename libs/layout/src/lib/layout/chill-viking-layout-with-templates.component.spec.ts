@@ -10,6 +10,10 @@ import { of } from 'rxjs';
         <h2>overridden-template-header</h2>
         <span class="json">{{ header | json }}</span>
       </ng-template>
+      <ng-template cvFooter let-footer>
+        <p>{{ footer.copyrightHolder }}</p>
+        <span class="json">{{ footer | json }}</span>
+      </ng-template>
     </cv-layout>
   `,
 })
@@ -35,6 +39,9 @@ describe('ChillVikingLayoutComponent with Templates', () => {
     layoutContext = {
       header: {
         title$: of('header.title'),
+      },
+      footer: {
+        copyrightHolder: 'a dude',
       },
     };
     component.ctx = layoutContext;
@@ -64,5 +71,13 @@ describe('ChillVikingLayoutComponent with Templates', () => {
       'overridden-template-header',
     );
     expectJsonRendered(element, layoutContext.header);
+  });
+
+  it('should display footer from template', () => {
+    const element = fixture.nativeElement.querySelector('.cv-layout-footer');
+
+    expect(element).toBeInstanceOf(HTMLDivElement);
+    expect(element.querySelector('p')?.textContent).toContain('a dude');
+    expectJsonRendered(element, layoutContext.footer);
   });
 });
