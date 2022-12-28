@@ -66,7 +66,7 @@ describe('ChillVikingLayoutComponent with Templates', () => {
   it('should display header from template', () => {
     const element = fixture.nativeElement.querySelector('.cv-layout-header');
 
-    expect(element).toBeInstanceOf(HTMLDivElement);
+    expect(element).toBeInstanceOf(HTMLElement);
     expect(element.querySelector('h2')?.textContent).toEqual(
       'overridden-template-header',
     );
@@ -76,7 +76,7 @@ describe('ChillVikingLayoutComponent with Templates', () => {
   it('should display footer from template', () => {
     const element = fixture.nativeElement.querySelector('.cv-layout-footer');
 
-    expect(element).toBeInstanceOf(HTMLDivElement);
+    expect(element).toBeInstanceOf(HTMLElement);
     expect(element.querySelector('p')?.textContent).toContain('a dude');
     expectJsonRendered(element, layoutContext.footer);
   });

@@ -1,20 +1,20 @@
 <div class="cv-layout">
-  <div class="cv-layout-header">
+  <header class="cv-layout-header">
     <ng-container
       *ngTemplateOutlet="
         headerTemplate || defaultHeader;
         context: getContext(data.header)
       "
     ></ng-container>
-  </div>
+  </header>
   <div class="cv-layout-container">
     <ng-content></ng-content>
   </div>
-  <div *ngIf="footerTemplate" class="cv-layout-footer">
+  <footer *ngIf="footerTemplate" class="cv-layout-footer">
     <ng-container
       *ngTemplateOutlet="footerTemplate; context: getContext(data.footer)"
     ></ng-container>
-  </div>
+  </footer>
 </div>
 
 <ng-template cvHeader #defaultHeader let-header>
