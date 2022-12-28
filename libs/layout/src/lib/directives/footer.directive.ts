@@ -1,5 +1,10 @@
-import { Directive, EmbeddedViewRef, Injector, TemplateRef } from '@angular/core';
-import { AsImplicit, LayoutFooterContext } from '@chill-viking/layout';
+import {
+  Directive,
+  EmbeddedViewRef,
+  Injector,
+  TemplateRef,
+} from '@angular/core';
+import { AsImplicit, LayoutFooterContext } from '../models';
 
 export type FooterDirectiveTemplateContext = AsImplicit<LayoutFooterContext>;
 
