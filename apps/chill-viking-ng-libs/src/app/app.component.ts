@@ -13,5 +13,8 @@ export class AppComponent {
     header: {
       title$: of(this.title),
     },
+    footer: {
+      copyrightHolder: 'chill-viking',
+    },
   };
 }
