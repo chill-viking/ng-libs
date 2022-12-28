@@ -3,12 +3,17 @@
     <ng-container
       *ngTemplateOutlet="
         headerTemplate || defaultHeader;
-        context: { $implicit: data.header }
+        context: getContext(data.header)
       "
     ></ng-container>
   </div>
   <div class="cv-layout-container">
     <ng-content></ng-content>
+  </div>
+  <div *ngIf="footerTemplate" class="cv-layout-footer">
+    <ng-container
+      *ngTemplateOutlet="footerTemplate; context: getContext(data.footer)"
+    ></ng-container>
   </div>
 </div>
 
