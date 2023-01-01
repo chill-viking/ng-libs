@@ -1,4 +1,39 @@
-p {
-  color: white;
-  background: pink;
+.cv-layout-container {
+  padding: 0 15px;
+
+  section {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5em;
+
+    &#welcome {
+      min-height: 0;
+      align-items: center;
+    }
+
+    &#overview {
+      align-items: center;
+      justify-content: space-evenly;
+
+      .question {
+        font-weight: bold;
+      }
+
+      img {
+        max-width: 90%;
+      }
+    }
+  }
+}
+
+// styles to move into @chill-viking/layout
+cv-layout .cv-layout {
+  max-width: 100vw;
+  width: auto; // max-width to replace currently set width.
+
+  .cv-layout-container {
+    max-width: 100%;
+    width: auto; // max-width to replace currently set width.
+  }
 }
