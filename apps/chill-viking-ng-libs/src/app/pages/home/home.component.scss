@@ -7,9 +7,19 @@
     flex-direction: column;
     font-size: 1.5em;
 
-    &#welcome {
-      min-height: 0;
+    .cta {
+      display: flex;
+      flex-direction: column;
       align-items: center;
+      justify-content: space-between;
+
+      ng-libs-cta {
+        margin-bottom: 15px;
+      }
+
+      mat-icon {
+        margin-right: 10px;
+      }
     }
 
     &#overview {
