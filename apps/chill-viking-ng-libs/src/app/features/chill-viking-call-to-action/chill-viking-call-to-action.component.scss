@@ -1,0 +1,61 @@
+.cta-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+
+  mat-icon {
+    margin-right: 10px;
+  }
+
+  &.primary {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+
+    &:hover {
+      color: #fff;
+      background-color: #286090;
+      border-color: #204d74;
+    }
+    &:active {
+      color: #fff;
+      background-color: #204d74;
+      border-color: #122b40;
+    }
+    &:disabled {
+      color: #fff;
+      background-color: #337ab7;
+      border-color: #2e6da4;
+      cursor: not-allowed;
+      opacity: 0.65;
+    }
+  }
+
+  &.secondary {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+
+    &:hover {
+      color: #333;
+      background-color: #e6e6e6;
+      border-color: #adadad;
+    }
+    &:active {
+      color: #333;
+      background-color: #d4d4d4;
+      border-color: #8c8c8c;
+    }
+    &:disabled {
+      color: #333;
+      background-color: #fff;
+      border-color: #ccc;
+      cursor: not-allowed;
+      opacity: 0.65;
+    }
+  }
+}
