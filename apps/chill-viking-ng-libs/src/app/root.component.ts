@@ -4,12 +4,13 @@ import {
   Component,
   ViewEncapsulation,
 } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   standalone: true,
   selector: 'ng-libs-root',
-  imports: [CommonModule],
-  template: ` <p>root works!</p> `,
+  imports: [CommonModule, RouterOutlet],
+  template: ` <router-outlet></router-outlet> `,
   styles: [],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
