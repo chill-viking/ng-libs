@@ -1,0 +1,39 @@
+<cv-layout [data]="context">
+  <ng-template cvHeader let-header>
+    <ng-libs-header [context]="header" [subTitle$]="subTitle$"></ng-libs-header>
+  </ng-template>
+  <section id="overview">
+    <div class="section-title">
+      <h1>Overview</h1>
+    </div>
+    <div class="introduction">
+      <span class="question">
+        Are you tired of tackling common Angular development challenges on your
+        own?
+      </span>
+
+      <p>
+        Chill Viking, more specifically this repository, is here to help! Using
+        this repository, we aim to create npm packages that solve problems and
+        make your life easier.
+      </p>
+      <p>
+        Check out our offerings and see how we can help you become an Angular
+        pro.
+      </p>
+      <div class="cta">
+        <!-- To be added after packages page created
+        <ng-libs-cta [title]="'View available packages'" (clicked)='goToPackages()'></ng-libs-cta>
+        -->
+        <ng-libs-cta (clicked)="goToRepository()" type="secondary">
+          <mat-icon>open_in_new</mat-icon>
+          <span>Visit Repository</span>
+        </ng-libs-cta>
+        <ng-libs-cta (clicked)="goToDiscussions()" type="secondary">
+          <mat-icon>open_in_new</mat-icon>
+          <span>Ask Us a Question</span>
+        </ng-libs-cta>
+      </div>
+    </div>
+  </section>
+</cv-layout>

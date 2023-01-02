@@ -1,0 +1,11 @@
+<div class="header-container">
+  <div class="header-image">
+    <img src="/assets/viking.svg" alt="Chill Viking" />
+  </div>
+  <div class="header-title">
+    <h1>{{ title$ | async }}</h1>
+    <ng-container *ngIf="subTitle$ | async; let subTitle">
+      <h2>{{ subTitle }}</h2>
+    </ng-container>
+  </div>
+</div>
