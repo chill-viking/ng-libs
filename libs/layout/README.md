@@ -76,8 +76,7 @@ and the `cvFooter` directive should be used in an `ng-template` element with a `
 The `let-header` attribute defines the data that will be provided to the template for the header,
 and the `let-footer` attribute defines the data that will be provided to the template for the footer.
 
-The type for the `header` object is `{ title$: Observable<string> }`,
-and the type for the `footer` object is `{ copyRightHolder?: string }`.
+See [object types](#object-types) for details on the data that will be provided to the header and footer templates.
 The `title$` property of the header object should be an `Observable` of type `string` that emits the title to display in the header.
 The `copyRightHolder` property of the `footer` object is optional and should be a `string` that specifies the copyright holder to display in the footer.
 
@@ -113,36 +112,20 @@ You can then bind the `title$` property to the `cvLayout` component using the `[
 
 #### Defaults
 
-The default for the `[data]` input of the component is
+The default for the `[data]` input of the component is:
 
 ```typescript
 {
   header: {
-    title$: of('[data] not supplied');
-  }
+    title$: of('[data] not provided'),
+  },
+  footer: undefined,
 }
 ```
 
-When no input is provided for `[data]`, the rendered title will be `[data] not supplied`.
-
-### Final HTML
-
-The above [component](#component) and [template](#template),
-result in the following HTML rendered inside the `<cv-layout>` element of the template
-
-```html
-<div class="cv-layout">
-  <header class="cv-layout-header">
-    <h1>Custom header for My Title</h1>
-  </header>
-  <div class="cv-layout-container">
-    <p>My Content</p>
-  </div>
-  <footer class="cv-layout-footer">
-    <span>Copyright &copy; 2023 Chill Viking</span>
-  </footer>
-</div>
-```
+The `header` object is always included in the `data` input and has a default `title$`
+property of `of('[data] not provided')` creating a header with `[data] not provided`.
+The `footer` object is optional and has a default value of `undefined`.
 
 ## Contributing
 
