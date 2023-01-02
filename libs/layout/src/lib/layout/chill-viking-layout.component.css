@@ -5,13 +5,18 @@ body {
 .cv-layout {
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  width: auto;
+  box-sizing: border-box;
 }
 
 .cv-layout-header {
-  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .cv-layout-container {
-  width: 100%;
+  width: auto;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
 }
