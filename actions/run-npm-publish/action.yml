@@ -26,8 +26,9 @@ runs:
   steps:
     - shell: pwsh
       if: inputs.project-version != ''
+      working-directory: ./${{ inputs.project-location }}
       run: |
-        echo "inside of versioning"
+        npm version
       name: Set version
 
     - shell: pwsh
