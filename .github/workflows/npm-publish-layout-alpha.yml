@@ -1,10 +1,11 @@
-name: npm-publish-layout-alpha
 on:
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened]
     paths:
       - libs/layout/**
+
+name: npm-publish-layout-alpha
 
 permissions: read-all
 
