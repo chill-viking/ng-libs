@@ -1,4 +1,4 @@
-name: publish-layout-lib-coverage
+name: layout-lib-sonar-cloud
 on:
   push:
     branches: [main]
