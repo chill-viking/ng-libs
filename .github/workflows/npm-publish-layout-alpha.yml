@@ -24,11 +24,6 @@ jobs:
       - uses: actions/checkout@v3
         name: 'Checkout code'
 
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-
       - name: get-npm-version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@main
@@ -40,21 +35,21 @@ jobs:
         uses: actions/cache@v3
         with:
           path: tmp
-          key: alpha-publish-${{ env.NX_PROJECT }}-${{ steps.package-version.outputs.current-version }}
-          restore-keys: alpha-publish-${{ env.NX_PROJECT }}-${{ steps.package-version.outputs.current-version }}
+          key: alpha-runs-${{ env.NX_PROJECT }}-${{ steps.package-version.outputs.current-version }}
+          restore-keys: alpha-runs-${{ env.NX_PROJECT }}-${{ steps.package-version.outputs.current-version }}
 
       - name: Create initial Build
         if: steps.build-number.outputs.cache-hit != 'true'
         run: |
           mkdir tmp
-          echo 0 > tmp/build
+          echo ${{ github.run_number }} > tmp/runs
 
       - name: Increment Build
         id: increment-build
         run: |
-          x=$(<tmp/build)
+          z=$(<tmp/build)
+          x=$((${{ github.run_number }} - $z))
           y=$(($x + 1))
-          echo $y > tmp/build
           echo "build=${y}" >> $GITHUB_OUTPUT
 
       - name: Create Alpha Version
