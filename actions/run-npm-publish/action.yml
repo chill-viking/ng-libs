@@ -12,6 +12,9 @@ inputs:
   project-dist-location:
     description: 'Location of compiled project'
     required: true
+  npm-auth-token:
+    description: 'Auth Token to use for publishing'
+    required: true
   project-version:
     description: 'Version to use for publishing, leave blank for latest'
     required: false
@@ -20,22 +23,54 @@ inputs:
     description: 'Tag to use for publish, defaults to latest'
     required: false
     default: 'latest'
+  checkout-completed:
+    description: 'Tag to describe whether code has been checked out'
+    required: false
+    default: 'true' # for now, using actions from checked out code, so not necessary
+  node-lts-version:
+    description: 'LTS version of node to use for publishing'
+    required: false
+    default: '18.x'
+  build-completed:
+    description: 'A build of the project to be published has already been done'
+    required: false
+    default: 'false'
 
 runs:
   using: 'composite'
   steps:
+    - uses: actions/checkout@v3
+      name: Checkout Code
+      if: inputs.checkout-completed != 'true'
+
     - shell: pwsh
+      name: Set version
       if: inputs.project-version != ''
       working-directory: ./${{ inputs.project-location }}
       run: |
+        npm version ${{ inputs.project-version }} --no-git-tag-version
         npm version
-      name: Set version
+
+    - uses: ./actions/npm-ci-with-cache
+      if: inputs.build-completed == 'false'
+      name: Install Dependencies
+
+    - uses: ./actions/nx-test-and-build # could possibly have build location as an output here
+      if: inputs.build-completed == 'false'
+      name: Test and Build ${{ inputs.project-name }}
+      with:
+        project-name: ${{ inputs.project-name }}
+
+    # Setup .npmrc file to publish to npm
+    - uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-lts-version }}
+        registry-url: 'https://registry.npmjs.org'
 
     - shell: pwsh
+      name: Publish Package
+      working-directory: ./${{ inputs.project-dist-location }}
       run: |
-        echo "project-name: ${{ inputs.project-name }}"
-        echo "project-location: ${{ inputs.project-location }}"
-        echo "project-dist-location: ${{ inputs.project-dist-location }}"
-        echo "project-version: ${{ inputs.project-version }}"
-        echo "tag: ${{ inputs.project-tag }}"
-      name: Test ${{ inputs.project-name }} w/ echo
+        npm publish --access public --tag ${{ inputs.project-tag }}
+      env:
+        NODE_AUTH_TOKEN: ${{ inputs.npm-auth-token }}

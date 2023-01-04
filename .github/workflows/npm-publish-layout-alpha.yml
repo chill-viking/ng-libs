@@ -5,7 +5,6 @@ on: push
 #      - libs/layout/**
 
 env:
-  NPM_TOKEN: ${{ secrets.ORG_NPM_TOKEN }}
   NX_PROJECT: 'layout'
   PROJECT_PATH: 'libs/layout'
 
@@ -21,6 +20,7 @@ jobs:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - uses: actions/checkout@v3
+        name: 'Checkout code'
 
       - name: get-npm-version
         id: package-version
@@ -51,7 +51,7 @@ jobs:
           echo "build=${y}" >> $GITHUB_OUTPUT
 
       - name: Create Alpha Version
-        id: adjust-version
+        id: alpha-version
         run: |
           a=${{ steps.package-version.outputs.current-version }}
           v=(${a//\./ })
@@ -66,8 +66,9 @@ jobs:
       - uses: ./actions/run-npm-publish
         name: Publish to NPM
         with:
+          npm-auth-token: ${{ secrets.ORG_NPM_TOKEN }}
           project-name: ${{ env.NX_PROJECT }}
           project-location: ${{ env.PROJECT_PATH }}
           project-dist-location: dist/${{ env.PROJECT_PATH }}
-          project-version: ${{ steps.adjust-version.outputs.version }}
+          project-version: ${{ steps.alpha-version.outputs.version }}
           project-tag: 'alpha'
