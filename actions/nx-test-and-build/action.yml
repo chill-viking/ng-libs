@@ -11,7 +11,7 @@ runs:
   using: 'composite'
   steps:
     - shell: pwsh
-      run: npx nx run ${{ inputs.project-name }}:test --parallel=3 --code-coverage
+      run: npx nx run ${{ inputs.project-name }}:test --code-coverage
       name: Test ${{ inputs.project-name }}
 
     - shell: pwsh
