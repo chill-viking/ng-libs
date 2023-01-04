@@ -1,4 +1,3 @@
-name: layout-lib-sonar-cloud
 on:
   push:
     branches: [main]
@@ -9,6 +8,8 @@ on:
     types: [opened, synchronize, reopened]
     paths:
       - libs/layout/**
+
+name: layout-lib-sonar-cloud
 
 env:
   SONAR_TOKEN: ${{ secrets.LAYOUT_LIB_SONAR_TOKEN }}
