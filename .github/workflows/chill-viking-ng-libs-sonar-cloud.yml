@@ -7,6 +7,9 @@ on:
 
 name: chill-viking-ng-libs-sonar-cloud
 
+permissions:
+  contents: read
+
 env:
   SONAR_TOKEN: ${{ secrets.DEMO_APP_SONAR_TOKEN }}
   COVERAGE_LOCATION: 'coverage/lcov.info'

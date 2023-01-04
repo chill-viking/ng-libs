@@ -11,6 +11,9 @@ on:
 
 name: layout-lib-sonar-cloud
 
+permissions:
+  contents: read
+
 env:
   SONAR_TOKEN: ${{ secrets.LAYOUT_LIB_SONAR_TOKEN }}
   COVERAGE_LOCATION: 'coverage/lcov.info'
