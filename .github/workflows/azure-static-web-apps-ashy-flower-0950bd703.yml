@@ -1,5 +1,3 @@
-name: publish-ng-libs-site
-
 on:
   push:
     branches:
@@ -8,6 +6,11 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
+
+name: publish-ng-libs-site
+
+permissions:
+  contents: read
 
 jobs:
   build_and_deploy_job:

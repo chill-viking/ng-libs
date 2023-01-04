@@ -1,10 +1,14 @@
-name: chill-viking-ng-libs-sonar-cloud
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened]
+
+name: chill-viking-ng-libs-sonar-cloud
+
+permissions:
+  contents: read
 
 env:
   SONAR_TOKEN: ${{ secrets.DEMO_APP_SONAR_TOKEN }}
