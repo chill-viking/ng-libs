@@ -30,13 +30,25 @@ jobs:
         with:
           path: ${{ env.PROJECT_PATH }}
 
+      - name: Bump Major for Alpha Version
+        id: bumped-version
+        run: |
+          a=${{ steps.package-version.outputs.current-version }}
+          v=(${a//\./ })
+          x=${v[0]}
+          major=$(($x + 1))
+          minor=${v[1]}
+          patch=${v[2]}
+          newVersion="$major.$minor.$patch"
+          echo "version=${newVersion}" >> $GITHUB_OUTPUT
+
       - name: Cache Build Number
         id: build-number
         uses: actions/cache@v3
         with:
           path: tmp
-          key: alpha-runs-${{ env.NX_PROJECT }}-${{ steps.package-version.outputs.current-version }}
-          restore-keys: alpha-runs-${{ env.NX_PROJECT }}-${{ steps.package-version.outputs.current-version }}
+          key: alpha-runs-${{ env.NX_PROJECT }}-${{ steps.bumped-version.outputs.version }}
+          restore-keys: alpha-runs-${{ env.NX_PROJECT }}-${{ steps.bumped-version.outputs.version }}
 
       - name: Create initial Build
         if: steps.build-number.outputs.cache-hit != 'true'
@@ -55,13 +67,7 @@ jobs:
       - name: Create Alpha Version
         id: alpha-version
         run: |
-          a=${{ steps.package-version.outputs.current-version }}
-          v=(${a//\./ })
-          major=${v[0]}
-          minor=${v[1]}
-          x=${v[2]}
-          patch=$(($x + 1))
-          newVersion="$major.$minor.$patch"
+          newVersion=${{ steps.bumped-version.outputs.version }}
           num=${{ steps.increment-build.outputs.build }}
           echo "version=${newVersion}-alpha.${num}" >> $GITHUB_OUTPUT
 
