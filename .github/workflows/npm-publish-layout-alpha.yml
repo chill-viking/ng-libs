@@ -47,7 +47,7 @@ jobs:
       - name: Increment Build
         id: increment-build
         run: |
-          z=$(<tmp/build)
+          z=$(<tmp/runs)
           x=$((${{ github.run_number }} - $z))
           y=$(($x + 1))
           echo "build=${y}" >> $GITHUB_OUTPUT
