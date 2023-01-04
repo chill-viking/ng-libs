@@ -28,13 +28,13 @@ jobs:
           egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
 
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: nrwl/nx-set-shas@v3
+        name: 'Checkout code'
 
       - uses: ./actions/npm-ci-with-cache
+        name: Install Dependencies
 
-      - uses: ./actions/nx-affected-test-and-build
+      - uses: ./actions/nx-test-and-build
+        name: Test and Build project
         with:
           project-name: ${{ env.NX_PROJECT }}
 

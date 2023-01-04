@@ -1,6 +1,6 @@
-name: nx-affected-test-and-build
+name: nx-test-and-build
 author: 'Peter Jokumsen'
-description: 'TBA'
+description: 'Script to test and build project'
 
 inputs:
   project-name:
@@ -15,5 +15,5 @@ runs:
       name: Test ${{ inputs.project-name }}
 
     - shell: pwsh
-      run: npx nx run ${{ env.NX_PROJECT }}:build --parallel=3
+      run: npx nx run ${{ inputs.project-name }}:build:production
       name: Build ${{ inputs.project-name }}
