@@ -4,6 +4,8 @@ on: push
 #    paths:
 #      - libs/layout/**
 
+permissions: read-all
+
 env:
   NX_PROJECT: 'layout'
   PROJECT_PATH: 'libs/layout'
