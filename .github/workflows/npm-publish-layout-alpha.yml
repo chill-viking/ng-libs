@@ -45,38 +45,15 @@ jobs:
           newVersion="$major.$minor.$patch"
           echo "version=${newVersion}" >> $GITHUB_OUTPUT
 
-      - name: Cache build number
-        id: build-number
-        uses: actions/cache@v3
-        with:
-          path: tmp
-          key: alpha-runs-${{ env.NX_PROJECT }}-${{ steps.bumped-version.outputs.version }}
-          restore-keys: alpha-runs-${{ env.NX_PROJECT }}-${{ steps.bumped-version.outputs.version }}
-
-      - name: Create initial build number
-        if: steps.build-number.outputs.cache-hit != 'true'
-        run: |
-          mkdir tmp
-          echo ${{ github.run_number }} > tmp/runs
-
-      - name: Increment build number
-        id: increment-build
-        run: |
-          z=$(<tmp/runs)
-          x=$((${{ github.run_number }} - $z))
-          y=$(($x + 1))
-          echo "build=${y}" >> $GITHUB_OUTPUT
-
       - name: Create alpha version
         id: alpha-version
         run: |
           newVersion=${{ steps.bumped-version.outputs.version }}
-          num=${{ steps.increment-build.outputs.build }}
+          num=${{ github.run_number }}
           echo "version=${newVersion}-alpha.${num}" >> $GITHUB_OUTPUT
 
       - uses: ./actions/run-npm-publish
         name: Publish to NPM
-        continue-on-error: true # ignore failures
         with:
           npm-auth-token: ${{ secrets.ORG_NPM_TOKEN }}
           project-name: ${{ env.NX_PROJECT }}
