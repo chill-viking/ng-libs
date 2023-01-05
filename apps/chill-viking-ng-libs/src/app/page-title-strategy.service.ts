@@ -1,0 +1,34 @@
+import { Injectable } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import {
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  TitleStrategy,
+} from '@angular/router';
+
+@Injectable()
+export class PageTitleStrategyService extends TitleStrategy {
+  constructor(private readonly _title: Title) {
+    super();
+  }
+
+  private resolveChildTitles(
+    activatedRootSnapshot: ActivatedRouteSnapshot,
+  ): string[] {
+    if (activatedRootSnapshot.firstChild) {
+      const result = [
+        activatedRootSnapshot.title ?? '',
+        ...this.resolveChildTitles(activatedRootSnapshot.firstChild),
+      ];
+
+      return result.filter((title) => title !== '');
+    }
+
+    return [activatedRootSnapshot.title ?? ''];
+  }
+
+  override updateTitle(snapshot: RouterStateSnapshot): void {
+    const titles = ['Chill Viking', ...this.resolveChildTitles(snapshot.root)];
+    this._title.setTitle(titles.reverse().join(' | '));
+  }
+}
