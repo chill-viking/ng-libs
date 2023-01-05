@@ -14,48 +14,16 @@ name: layout-lib-sonar-cloud
 permissions:
   contents: read
 
-env:
-  SONAR_TOKEN: ${{ secrets.LAYOUT_LIB_SONAR_TOKEN }}
-  COVERAGE_LOCATION: 'coverage/lcov.info'
-  CONFIG_LOCATION: 'tsconfig.lib.json'
-  NX_PROJECT: 'layout'
-  PROJECT_BASE: 'libs/layout'
-
 jobs:
-  main:
+  use-workflow:
     name: test, build, and publish
-    runs-on: ubuntu-latest
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@v2
-        with:
-          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
-
-      - uses: actions/checkout@v3
-        name: 'Checkout code'
-
-      - uses: ./actions/npm-ci-with-cache
-        name: Install Dependencies
-
-      - uses: ./actions/nx-test-and-build
-        name: Test and Build project
-        with:
-          project-name: ${{ env.NX_PROJECT }}
-
-      - name: get-npm-version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@main
-        with:
-          path: ${{ env.PROJECT_BASE }}
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        with:
-          projectBaseDir: ${{ env.PROJECT_BASE }}
-          args: >
-            -Dsonar.javascript.lcov.reportPaths=${{ env.COVERAGE_LOCATION }}
-            -Dsonar.typescript.tsconfigPaths=${{ env.CONFIG_LOCATION }}
-            -Dsonar.projectVersion=${{ steps.package-version.outputs.current-version }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
+    uses: chill-viking/workflows/.github/workflows/nx-sonar-cloud-scan.yml@main
+    with:
+      sonar-project: chill-viking-org_ng-libs-cv-layout
+      project-location: libs/layout
+      project-name: layout
+      config-location: tsconfig.lib.json
+      package-location: ./libs/layout/
+    secrets:
+      sonar-token: ${{ secrets.LAYOUT_LIB_SONAR_TOKEN }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}

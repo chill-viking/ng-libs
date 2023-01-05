@@ -33,7 +33,7 @@ jobs:
         with:
           path: ${{ env.PROJECT_PATH }}
 
-      - name: Bump Major for Alpha Version
+      - name: Bump major for alpha version
         id: bumped-version
         run: |
           a=${{ steps.package-version.outputs.current-version }}
@@ -45,7 +45,7 @@ jobs:
           newVersion="$major.$minor.$patch"
           echo "version=${newVersion}" >> $GITHUB_OUTPUT
 
-      - name: Cache Build Number
+      - name: Cache build number
         id: build-number
         uses: actions/cache@v3
         with:
@@ -53,13 +53,13 @@ jobs:
           key: alpha-runs-${{ env.NX_PROJECT }}-${{ steps.bumped-version.outputs.version }}
           restore-keys: alpha-runs-${{ env.NX_PROJECT }}-${{ steps.bumped-version.outputs.version }}
 
-      - name: Create initial Build
+      - name: Create initial build number
         if: steps.build-number.outputs.cache-hit != 'true'
         run: |
           mkdir tmp
           echo ${{ github.run_number }} > tmp/runs
 
-      - name: Increment Build
+      - name: Increment build number
         id: increment-build
         run: |
           z=$(<tmp/runs)
@@ -67,7 +67,7 @@ jobs:
           y=$(($x + 1))
           echo "build=${y}" >> $GITHUB_OUTPUT
 
-      - name: Create Alpha Version
+      - name: Create alpha version
         id: alpha-version
         run: |
           newVersion=${{ steps.bumped-version.outputs.version }}

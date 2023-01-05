@@ -51,13 +51,13 @@ runs:
         npm version ${{ inputs.project-version }} --no-git-tag-version
         npm version
 
-    - uses: ./actions/npm-ci-with-cache
+    - uses: chill-viking/workflows/actions/npm-ci@main
       if: inputs.build-completed == 'false'
-      name: Install Dependencies
+      name: Install dependencies
 
-    - uses: ./actions/nx-test-and-build # could possibly have build location as an output here
+    - uses: chill-viking/workflows/actions/nx-test-and-build@main
       if: inputs.build-completed == 'false'
-      name: Test and Build ${{ inputs.project-name }}
+      name: Test and build ${{ inputs.project-name }}
       with:
         project-name: ${{ inputs.project-name }}
 
