@@ -27,8 +27,15 @@ export class PageTitleStrategyService extends TitleStrategy {
     return [activatedRootSnapshot.title ?? ''];
   }
 
+  private makeCurrentTitleFirst(...arr: string[]): string[] {
+    return [...arr].reverse();
+  }
+
   override updateTitle(snapshot: RouterStateSnapshot): void {
-    const titles = ['Chill Viking', ...this.resolveChildTitles(snapshot.root)];
-    this._title.setTitle(titles.reverse().join(' | '));
+    const titles = this.makeCurrentTitleFirst(
+      'Chill Viking',
+      ...this.resolveChildTitles(snapshot.root),
+    );
+    this._title.setTitle(titles.join(' | '));
   }
 }
