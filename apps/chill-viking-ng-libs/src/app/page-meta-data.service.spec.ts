@@ -4,23 +4,23 @@ import { Title } from '@angular/platform-browser';
 import { BrowserTestingModule } from '@angular/platform-browser/testing';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { MockProvider } from 'ng-mocks';
-import { PageTitleStrategyService } from './page-title-strategy.service';
+import { PageMetaDataService } from './page-meta-data.service';
 
-describe('PageTitleStrategyService', () => {
+describe('PageMetaDataService', () => {
   let titleSpy: Title;
-  let service: PageTitleStrategyService;
+  let service: PageMetaDataService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, BrowserTestingModule],
       providers: [
-        PageTitleStrategyService,
+        PageMetaDataService,
         MockProvider(Title, { setTitle: jest.fn() }),
       ],
     }).compileComponents();
 
     titleSpy = TestBed.inject(Title);
-    service = TestBed.inject(PageTitleStrategyService);
+    service = TestBed.inject(PageMetaDataService);
   });
 
   it('is created', () => {

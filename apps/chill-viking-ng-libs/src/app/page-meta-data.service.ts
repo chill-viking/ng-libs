@@ -7,7 +7,7 @@ import {
 } from '@angular/router';
 
 @Injectable()
-export class PageTitleStrategyService extends TitleStrategy {
+export class PageMetaDataService extends TitleStrategy {
   constructor(private readonly _title: Title) {
     super();
   }
