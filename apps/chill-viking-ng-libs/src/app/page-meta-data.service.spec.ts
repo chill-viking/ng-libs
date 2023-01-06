@@ -30,9 +30,11 @@ describe('PageMetaDataService', () => {
     expect(service).toBeTruthy();
   });
 
-  const createActivatedSnapshot = (
-    val: Partial<ActivatedRouteSnapshot>,
-  ): ActivatedRouteSnapshot => val as ActivatedRouteSnapshot;
+  const createActivatedSnapshot = ({
+    outlet = 'primary',
+    ...val
+  }: Partial<ActivatedRouteSnapshot>): ActivatedRouteSnapshot =>
+    ({ outlet, ...val } as ActivatedRouteSnapshot);
 
   const createRouterStateSnapshot = (
     val: Partial<RouterStateSnapshot>,
@@ -45,17 +47,24 @@ describe('PageMetaDataService', () => {
     beforeEach(() => {
       snapshot = createRouterStateSnapshot({
         root: createActivatedSnapshot({
-          firstChild: createActivatedSnapshot({
-            title: 'First',
-            firstChild: createActivatedSnapshot({
-              title: 'Second',
-              firstChild: createActivatedSnapshot({ title: 'Third' }),
+          children: [
+            createActivatedSnapshot({
+              title: 'First',
+              children: [
+                createActivatedSnapshot({
+                  title: 'Second',
+                  children: [createActivatedSnapshot({ title: 'Third' })],
+                }),
+              ],
             }),
-          }),
+          ],
         }),
       });
 
       updateMetaSpy = jest.spyOn(service, 'updateMeta');
+      updateMetaSpy.mockImplementation(() => {
+        /* do nothing */
+      });
     });
 
     it('should set correct title', async () => {
@@ -78,31 +87,29 @@ describe('PageMetaDataService', () => {
     >;
 
     beforeEach(() => {
-      snapshot = createRouterStateSnapshot({
-        root: createActivatedSnapshot({
-          firstChild: createActivatedSnapshot({
-            title: 'First',
-            firstChild: createActivatedSnapshot({
-              title: 'Second',
-              data: { meta: { description: 'should be ignored' } },
-              firstChild: createActivatedSnapshot({
-                title: 'Third',
-                data: {
-                  meta: {
-                    description: 'Third description',
-                    other: 'other tag',
-                  },
-                },
-              }),
-            }),
-          }),
-        }),
-      });
-
       updateTagSpy = jest.spyOn(metaSpy, 'updateTag');
     });
 
     it('should use meta from current activated route data', async () => {
+      snapshot = createRouterStateSnapshot({
+        root: createActivatedSnapshot({
+          children: [
+            createActivatedSnapshot({
+              children: [
+                createActivatedSnapshot({
+                  data: {
+                    metaTags: {
+                      description: 'Third description',
+                      other: 'other tag',
+                    },
+                  },
+                }),
+              ],
+            }),
+          ],
+        }),
+      });
+
       service.updateMeta(snapshot);
       expect(updateTagSpy).toHaveBeenCalledWith({
         name: 'description',
@@ -111,6 +118,23 @@ describe('PageMetaDataService', () => {
       expect(updateTagSpy).toHaveBeenCalledWith({
         name: 'other',
         content: 'other tag',
+      });
+    });
+
+    describe('when no metaTags available', () => {
+      it('should do nothing', () => {
+        snapshot = createRouterStateSnapshot({
+          root: createActivatedSnapshot({
+            children: [
+              createActivatedSnapshot({
+                data: {},
+              }),
+            ],
+          }),
+        });
+
+        service.updateMeta(snapshot);
+        expect(updateTagSpy).not.toHaveBeenCalled();
       });
     });
   });

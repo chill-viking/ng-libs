@@ -12,19 +12,27 @@ export class PageMetaDataService extends TitleStrategy {
     super();
   }
 
+  private getPrimaryNavigationChildren({
+    root,
+  }: Partial<RouterStateSnapshot>): ActivatedRouteSnapshot[] {
+    const result: ActivatedRouteSnapshot[] = [];
+    let primarySnapshot = root?.children.find((c) => c.outlet === 'primary');
+    while (primarySnapshot) {
+      result.push(primarySnapshot);
+      primarySnapshot = primarySnapshot.children?.find(
+        (c) => c.outlet === 'primary',
+      );
+    }
+
+    return result;
+  }
+
   private resolveChildTitles(
     activatedRootSnapshot: ActivatedRouteSnapshot,
   ): string[] {
-    if (activatedRootSnapshot.firstChild) {
-      const result = [
-        activatedRootSnapshot.title ?? '',
-        ...this.resolveChildTitles(activatedRootSnapshot.firstChild),
-      ];
-
-      return result.filter((title) => title !== '');
-    }
-
-    return [activatedRootSnapshot.title ?? ''];
+    return this.getPrimaryNavigationChildren({ root: activatedRootSnapshot })
+      .map((snapshot) => snapshot.title ?? '')
+      .filter((title) => title !== '');
   }
 
   private makeCurrentTitleFirst(...arr: string[]): string[] {
@@ -32,7 +40,16 @@ export class PageMetaDataService extends TitleStrategy {
   }
 
   updateMeta(snapshot: RouterStateSnapshot): void {
-    // to be implemented.
+    const routes = this.getPrimaryNavigationChildren(snapshot);
+    if (routes.length === 0) return;
+
+    const data = routes[routes.length - 1].data;
+    if (data === undefined || data['metaTags'] === undefined) return;
+
+    const metaTags = data['metaTags'];
+    for (const name in metaTags) {
+      this._meta.updateTag({ name, content: metaTags[name] });
+    }
   }
 
   override updateTitle(snapshot: RouterStateSnapshot): void {
