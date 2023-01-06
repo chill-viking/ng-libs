@@ -49,7 +49,7 @@ describe('PageTitleStrategyService', () => {
 
     service.updateTitle(snapshot);
     expect(titleSpy.setTitle).toHaveBeenCalledWith(
-      'Third | Second | First | Chill Viking',
+      'Third | Second | First | Chill Viking | ng-libs',
     );
   });
 });

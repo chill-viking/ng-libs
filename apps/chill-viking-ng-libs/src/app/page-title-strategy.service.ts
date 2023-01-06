@@ -33,7 +33,7 @@ export class PageTitleStrategyService extends TitleStrategy {
 
   override updateTitle(snapshot: RouterStateSnapshot): void {
     const titles = this.makeCurrentTitleFirst(
-      'Chill Viking',
+      'Chill Viking | ng-libs',
       ...this.resolveChildTitles(snapshot.root),
     );
     this._title.setTitle(titles.join(' | '));
