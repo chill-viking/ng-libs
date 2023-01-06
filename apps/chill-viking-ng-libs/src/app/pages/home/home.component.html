@@ -2,38 +2,37 @@
   <ng-template cvHeader let-header>
     <ng-libs-header [context]="header" [subTitle$]="subTitle$"></ng-libs-header>
   </ng-template>
-  <section id="overview">
+  <section id="welcome">
     <div class="section-title">
-      <h1>Overview</h1>
+      <h1>Welcome 👋</h1>
     </div>
-    <div class="introduction">
-      <span class="question">
-        Are you tired of tackling common Angular development challenges on your
-        own?
-      </span>
-
+    <div class="cta">
+      <!-- To be added after packages page created
+      <ng-libs-cta [title]="'View available packages'" (clicked)='goToPackages()'></ng-libs-cta>
+      -->
+      <ng-libs-cta (clicked)="goToRepository()" type="secondary">
+        <mat-icon>open_in_new</mat-icon>
+        <span>Visit Repository</span>
+      </ng-libs-cta>
+      <ng-libs-cta (clicked)="goToDiscussions()" type="secondary">
+        <mat-icon>open_in_new</mat-icon>
+        <span>Ask Us a Question</span>
+      </ng-libs-cta>
+    </div>
+    <div class="section-body">
       <p>
-        Chill Viking, more specifically this repository, is here to help! Using
-        this repository, we aim to create npm packages that solve problems and
-        make your life easier.
+        Welcome to the Chill Viking <code>ng-libs</code> repository! Here,
+        you'll find a variety of high-quality npm packages for Angular projects.
       </p>
       <p>
-        Check out our offerings and see how we can help you become an Angular
-        pro.
+        Our packages are easy to use and constantly updated to ensure
+        compatibility with the latest version of Angular.
       </p>
-      <div class="cta">
-        <!-- To be added after packages page created
-        <ng-libs-cta [title]="'View available packages'" (clicked)='goToPackages()'></ng-libs-cta>
-        -->
-        <ng-libs-cta (clicked)="goToRepository()" type="secondary">
-          <mat-icon>open_in_new</mat-icon>
-          <span>Visit Repository</span>
-        </ng-libs-cta>
-        <ng-libs-cta (clicked)="goToDiscussions()" type="secondary">
-          <mat-icon>open_in_new</mat-icon>
-          <span>Ask Us a Question</span>
-        </ng-libs-cta>
-      </div>
+      <p>
+        Explore our packages and see how they can benefit your projects. We hope
+        you'll join our community and stay up-to-date on the latest
+        developments.
+      </p>
     </div>
   </section>
 </cv-layout>
