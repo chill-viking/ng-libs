@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
@@ -8,7 +8,7 @@ import {
 
 @Injectable()
 export class PageMetaDataService extends TitleStrategy {
-  constructor(private readonly _title: Title) {
+  constructor(private readonly _title: Title, private readonly _meta: Meta) {
     super();
   }
 
@@ -31,11 +31,17 @@ export class PageMetaDataService extends TitleStrategy {
     return [...arr].reverse();
   }
 
+  updateMeta(snapshot: RouterStateSnapshot): void {
+    // to be implemented.
+  }
+
   override updateTitle(snapshot: RouterStateSnapshot): void {
     const titles = this.makeCurrentTitleFirst(
       'Chill Viking | ng-libs',
       ...this.resolveChildTitles(snapshot.root),
     );
     this._title.setTitle(titles.join(' | '));
+
+    this.updateMeta(snapshot);
   }
 }
