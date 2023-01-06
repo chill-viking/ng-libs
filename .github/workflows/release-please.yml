@@ -4,8 +4,7 @@ on:
 
 name: release-please
 
-permissions:
-  contents: read
+permissions: write-all
 
 jobs:
   release-please:
