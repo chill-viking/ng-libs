@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.1.0](https://github.com/chill-viking/ng-libs/compare/chill-viking-ng-libs-v1.0.0...chill-viking-ng-libs-v1.1.0) (2023-01-06)
+
+
+### Features
+
+* **demo-app:** create introduction page for demos ([#41](https://github.com/chill-viking/ng-libs/issues/41)) ([c0cf54c](https://github.com/chill-viking/ng-libs/commit/c0cf54c1dd2ada1483d16ba28e30ac29148e3517))
+* **demo-app:** set title using TitleStrategy ([0777ca6](https://github.com/chill-viking/ng-libs/commit/0777ca62c26eddb916d0739b921368168e4e5073))
+* provide footer template in example ([ff08bca](https://github.com/chill-viking/ng-libs/commit/ff08bcad4a71517a04d9f213eec0de9863777546))
+* provide header template in example ([4423b4c](https://github.com/chill-viking/ng-libs/commit/4423b4cdf67f6b8ff43f2fb45758ba0f257608c1))
+
+
+### Bug Fixes
+
+* **@chill-viking/layout:** remove unused import ([a24befa](https://github.com/chill-viking/ng-libs/commit/a24befa95eea5f13bf7e56c6a62fe102fc34e580))
+* **demo-app:** resolve code smell for using `reverse` ([84374a6](https://github.com/chill-viking/ng-libs/commit/84374a63edeecbb84451e36ab1c1b798964da635))
+
 ## 1.0.0 (2022-12-20)
 
 
