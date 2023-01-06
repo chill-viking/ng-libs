@@ -13,11 +13,7 @@ export const rootRoutes: Routes = [
         ].join(' '),
       },
     },
-    loadComponent: () =>
-      import('./pages/home/home.component').then((c) => {
-        // Have to use braces to work around prettier's approach of wrapping lines... ffs
-        return c.HomeComponent;
-      }),
+    loadComponent: () => import('./pages/home').then((c) => c.HomeComponent),
   },
 ];
 
