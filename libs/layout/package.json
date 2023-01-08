@@ -1,11 +1,16 @@
 {
   "name": "@chill-viking/layout",
+  "description": "Angular package that provides a layout component for your application that keeps its contents contained within the bounds of the web browser.",
   "version": "2.0.0",
   "license": "GPL-3.0-or-later",
+  "keywords": [
+    "Angular",
+    "layout"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/chill-viking/ng-libs.git",
-    "directory": "libs/layout"
+    "directory": "/libs/layout"
   },
   "peerDependencies": {
     "@angular/common": "15.0.x",
