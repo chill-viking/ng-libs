@@ -1,5 +1,9 @@
 # @chill-viking/layout
 
+This Angular package provides a layout component for your application that keeps its contents contained within the bounds of the web browser.
+
+## Status Badges
+
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=chill-viking-org_ng-libs-cv-layout&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=chill-viking-org_ng-libs-cv-layout)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=chill-viking-org_ng-libs-cv-layout&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=chill-viking-org_ng-libs-cv-layout)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=chill-viking-org_ng-libs-cv-layout&metric=coverage)](https://sonarcloud.io/summary/new_code?id=chill-viking-org_ng-libs-cv-layout)
@@ -8,9 +12,8 @@
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=chill-viking-org_ng-libs-cv-layout&metric=bugs)](https://sonarcloud.io/summary/new_code?id=chill-viking-org_ng-libs-cv-layout)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=chill-viking-org_ng-libs-cv-layout&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=chill-viking-org_ng-libs-cv-layout)
 
-<!-- add status badge for publishing -->
+## Brief description
 
-This Angular package provides a layout component for your application that keeps its contents contained within the bounds of the web browser.
 The layout consists of three sections: a header, a footer, and the body of the content.
 Use it to give your application a consistent and organized look and feel.
 
