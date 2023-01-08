@@ -28,6 +28,7 @@ export class ChillVikingTableComponent<T> implements OnInit {
     title: string;
   }>;
   dataSource!: MatTableDataSource<T>;
+  tableCaption?: string;
 
   private camelCaseToPhrase(str: string): string {
     const words = str.split(/(?=[A-Z])/);
@@ -82,6 +83,7 @@ export class ChillVikingTableComponent<T> implements OnInit {
       title: columns[key] ?? `Unknown [${key as string}]`,
     }));
     this.displayedColumns = meta.displayColumns || Object.keys(columns);
+    this.tableCaption = meta.tableCaption;
     this.dataSource = new MatTableDataSource<T>(this.data.items);
   }
 }

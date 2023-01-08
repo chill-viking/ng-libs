@@ -29,7 +29,7 @@ describe('ChillVikingTableComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('data without columns', () => {
+  describe('when no meta data provided', () => {
     beforeEach(() => {
       component.data = {
         items: [{ ...model }, { ...model, nullable: 'value' }],
@@ -51,6 +51,37 @@ describe('ChillVikingTableComponent', () => {
         'description',
         'nullable',
       ]);
+    });
+
+    it('should have clear table caption', () => {
+      expect(component.tableCaption).toBeFalsy();
+    });
+  });
+
+  describe('when meta is provided', () => {
+    beforeEach(() => {
+      component.data = {
+        items: [],
+        meta: {
+          columns: { name: 'Different Title' },
+          tableCaption: 'A table',
+        },
+      };
+      fixture.detectChanges();
+    });
+
+    it('should have correct columns', () => {
+      expect(component.columns).toEqual([
+        { key: 'name', title: 'Different Title' },
+      ]);
+    });
+
+    it('should have correct displayed columns', () => {
+      expect(component.displayedColumns).toEqual(['name']);
+    });
+
+    it('should have caption', () => {
+      expect(component.tableCaption).toEqual('A table');
     });
   });
 });

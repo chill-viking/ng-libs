@@ -1,4 +1,11 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container *ngIf="tableCaption">
+    <caption>
+      {{
+        tableCaption
+      }}
+    </caption>
+  </ng-container>
   <!-- Columns -->
   <ng-container *ngFor="let column of columns" [matColumnDef]="column.key">
     <th mat-header-cell *matHeaderCellDef>{{ column.title }}</th>
