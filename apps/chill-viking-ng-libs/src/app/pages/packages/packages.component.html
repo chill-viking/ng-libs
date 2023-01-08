@@ -1,1 +1,6 @@
-<ng-libs-table [data]="{ items: data }"></ng-libs-table>
+<cv-layout [data]="layoutContext">
+  <ng-template cvHeader let-header>
+    <ng-libs-header [context]="header" [subTitle$]="subTitle$"></ng-libs-header>
+  </ng-template>
+  <ng-libs-table [data]="{ items: packages }"></ng-libs-table>
+</cv-layout>
