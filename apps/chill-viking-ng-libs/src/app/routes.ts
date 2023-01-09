@@ -15,6 +15,19 @@ export const rootRoutes: Routes = [
     },
     loadComponent: () => import('./pages/home').then((c) => c.HomeComponent),
   },
+  {
+    path: 'packages',
+    title: 'Packages',
+    data: {
+      metaTags: {
+        description: [
+          'A directory of high-quality npm packages for Angular projects.',
+        ].join(' '),
+      },
+    },
+    loadComponent: () =>
+      import('./pages/packages').then((c) => c.PackagesComponent),
+  },
 ];
 
 export const rootRouterFeatures: RouterFeatures[] = [];
