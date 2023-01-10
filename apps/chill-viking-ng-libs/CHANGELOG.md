@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/chill-viking/ng-libs/compare/chill-viking-ng-libs-v1.1.0...chill-viking-ng-libs-v1.2.0) (2023-01-10)
+
+
+### Features
+
+* **demo-app:** add packages page ([#68](https://github.com/chill-viking/ng-libs/issues/68)) ([233177b](https://github.com/chill-viking/ng-libs/commit/233177bb1c325df43470d8fea378d89166704c9a))
+* **demo-app:** update meta data for site ([#60](https://github.com/chill-viking/ng-libs/issues/60)) ([c9132b5](https://github.com/chill-viking/ng-libs/commit/c9132b5353d4fadc69442a547a82e10cc2d0fb06))
+
 ## [1.1.0](https://github.com/chill-viking/ng-libs/compare/chill-viking-ng-libs-v1.0.0...chill-viking-ng-libs-v1.1.0) (2023-01-06)
 
 

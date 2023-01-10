@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.1.0](https://github.com/chill-viking/ng-libs/compare/ng-libs-v2.0.0...ng-libs-v2.1.0) (2023-01-10)
+
+
+### Features
+
+* **demo-app:** add packages page ([#68](https://github.com/chill-viking/ng-libs/issues/68)) ([233177b](https://github.com/chill-viking/ng-libs/commit/233177bb1c325df43470d8fea378d89166704c9a))
+* **demo-app:** update meta data for site ([#60](https://github.com/chill-viking/ng-libs/issues/60)) ([c9132b5](https://github.com/chill-viking/ng-libs/commit/c9132b5353d4fadc69442a547a82e10cc2d0fb06))
+
+
+### Bug Fixes
+
+* **deps:** update nrwl monorepo to v15.4.5 ([85ac337](https://github.com/chill-viking/ng-libs/commit/85ac337e9c03a0930b4c119f8a43e3b19a528984))
+* **layout:** update package metadata ([#70](https://github.com/chill-viking/ng-libs/issues/70)) ([757061e](https://github.com/chill-viking/ng-libs/commit/757061e47513ff6c67cab8ef1082db680a68f3bc))
+
 ## [2.0.0](https://github.com/chill-viking/ng-libs/compare/ng-libs-v1.0.0...ng-libs-v2.0.0) (2023-01-06)
 
 
