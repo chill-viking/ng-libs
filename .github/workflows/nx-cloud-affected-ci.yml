@@ -3,13 +3,19 @@ on:
     branches: ['main']
   pull_request:
     branches: ['main']
-    types: [opened, synchronize, reopened]
 
 name: nx-cloud-affected-ci
 
 permissions: read-all
 
 jobs:
+  output-context:
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
   use-workflow:
     uses: chill-viking/workflows/.github/workflows/nx-test-affected.yml@main
     name: Test affected
