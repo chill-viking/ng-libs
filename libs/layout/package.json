@@ -4,6 +4,10 @@
   "version": "2.0.0",
   "license": "GPL-3.0-or-later",
   "homepage": "https://github.com/chill-viking/ng-libs/tree/main/libs/layout",
+  "bugs": {
+    "url": "https://github.com/chill-viking/ng-libs/issues?q=is%3Aissue+is%3Aopen+layout",
+    "email": "issues@chillviking.com"
+  },
   "keywords": [
     "angular",
     "layout"
