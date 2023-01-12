@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent, MockProvider } from 'ng-mocks';
 import { ChillVikingCallToActionComponent } from '../../features/chill-viking-call-to-action/chill-viking-call-to-action.component';
 import { ChillVikingHeaderComponent } from '../../features/chill-viking-header/chill-viking-header.component';
-import { WindowRouterService } from '../../window-router.service';
+import { WindowRouterService } from '../../services';
 
 import { HomeComponent } from './home.component';
 

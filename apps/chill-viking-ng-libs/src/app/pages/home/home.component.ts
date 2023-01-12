@@ -9,7 +9,7 @@ import { ChillVikingLayoutModule, LayoutContext } from '@chill-viking/layout';
 import { of } from 'rxjs';
 import { ChillVikingCallToActionComponent } from '../../features/chill-viking-call-to-action/chill-viking-call-to-action.component';
 import { ChillVikingHeaderComponent } from '../../features/chill-viking-header/chill-viking-header.component';
-import { WindowRouterService } from '../../window-router.service';
+import { WindowRouterService } from '../../services';
 
 @Component({
   selector: 'ng-libs-home',
