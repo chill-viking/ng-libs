@@ -1,5 +1,6 @@
 {
   "release-type": "node",
+  "separate-pull-requests": true,
   "packages": {
     ".": {},
     "apps/chill-viking-ng-libs": {},
