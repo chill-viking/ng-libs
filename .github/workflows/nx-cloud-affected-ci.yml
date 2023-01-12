@@ -10,6 +10,7 @@ permissions: read-all
 
 jobs:
   output-context:
+    runs-on: ubuntu-latest
     steps:
       - name: Dump GitHub context
         env:
