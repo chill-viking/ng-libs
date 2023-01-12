@@ -2,7 +2,7 @@ import { RouterFeatures, Routes } from '@angular/router';
 
 export const rootRoutes: Routes = [
   {
-    path: '',
+    path: 'home',
     title: 'Home',
     data: {
       metaTags: {
@@ -27,6 +27,11 @@ export const rootRoutes: Routes = [
     },
     loadComponent: () =>
       import('./pages/packages').then((c) => c.PackagesComponent),
+  },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'home',
   },
 ];
 

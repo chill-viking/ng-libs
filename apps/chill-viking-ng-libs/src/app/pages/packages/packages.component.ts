@@ -7,6 +7,7 @@ import {
 import { ChillVikingLayoutModule, LayoutContext } from '@chill-viking/layout';
 import { of } from 'rxjs';
 import { ChillVikingHeaderComponent } from '../../features/chill-viking-header/chill-viking-header.component';
+import { ChillVikingNavigationComponent } from '../../features/chill-viking-navigation/chill-viking-navigation.component';
 import { ChillVikingTableComponent } from '../../features/chill-viking-table/chill-viking-table.component';
 
 @Component({
@@ -16,6 +17,7 @@ import { ChillVikingTableComponent } from '../../features/chill-viking-table/chi
     ChillVikingTableComponent,
     ChillVikingLayoutModule,
     ChillVikingHeaderComponent,
+    ChillVikingNavigationComponent,
   ],
   templateUrl: './packages.component.html',
   styleUrls: ['./packages.component.scss'],

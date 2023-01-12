@@ -9,6 +9,7 @@ import { ChillVikingLayoutModule, LayoutContext } from '@chill-viking/layout';
 import { of } from 'rxjs';
 import { ChillVikingCallToActionComponent } from '../../features/chill-viking-call-to-action/chill-viking-call-to-action.component';
 import { ChillVikingHeaderComponent } from '../../features/chill-viking-header/chill-viking-header.component';
+import { ChillVikingNavigationComponent } from '../../features/chill-viking-navigation/chill-viking-navigation.component';
 import { WindowRouterService } from '../../services';
 
 @Component({
@@ -20,6 +21,7 @@ import { WindowRouterService } from '../../services';
     ChillVikingHeaderComponent,
     ChillVikingCallToActionComponent,
     MatIconModule,
+    ChillVikingNavigationComponent,
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],

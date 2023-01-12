@@ -1,0 +1,37 @@
+:host {
+  display: block;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  padding: 0 30px;
+  align-content: center;
+  align-items: flex-start;
+
+  a {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+    text-decoration: none;
+
+    &.active {
+      color: #fff;
+      background-color: #337ab7;
+      border-color: #2e6da4;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  nav {
+    flex-direction: column;
+  }
+}
