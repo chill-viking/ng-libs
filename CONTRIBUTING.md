@@ -49,3 +49,4 @@ This project is licensed under the [GPL-3.0 license](LICENSE).
 - Follow the coding standards
 - Use clear and descriptive commit messages using [Conventional Commit Messages](https://www.conventionalcommits.org)
 - Keep the code clean and organized
+- Keep code changes in a commit in a specific folder structure, i.e. changes to `apps/chill-viking-ng-libs` and `libs/layout` should be made in 2 separate commits
