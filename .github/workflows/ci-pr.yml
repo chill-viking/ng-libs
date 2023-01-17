@@ -1,12 +1,13 @@
 on:
-  push:
-    branches: ['main']
   pull_request:
-    branches: ['main']
+    branches: [main]
+    types: [opened, synchronize, reopened]
 
-name: nx-cloud-affected-ci
+name: CI PR
 
-permissions: read-all
+permissions:
+  contents: read
+  pull-requests: write
 
 jobs:
   output-context:
