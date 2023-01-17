@@ -39,6 +39,15 @@ jobs:
           echo "One or more files in the docs folder has changed."
           echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
 
+  install-node-modules:
+    runs-on: ubuntu-latest
+    name: Install Dependencies
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: chill-viking/workflows/actions/npm-ci@main
+        name: Install dependencies w/ caching
+
   output-context:
     runs-on: ubuntu-latest
     steps:
@@ -50,11 +59,12 @@ jobs:
   nx-affected:
     uses: chill-viking/workflows/.github/workflows/nx-test-affected.yml@main
     name: Test affected
+    needs: [install-node-modules]
 
   sonar-cloud-demo-app:
     name: Publish SonarCloud for Demo App
     uses: chill-viking/workflows/.github/workflows/nx-sonar-cloud-scan.yml@main
-    needs: nx-affected
+    needs: install-node-modules
     with:
       sonar-project: chill-viking-org_ng-libs-demo-app
       project-location: apps/chill-viking-ng-libs
@@ -68,7 +78,7 @@ jobs:
   sonar-cloud-layout:
     name: Publish SonarCloud for layout
     uses: chill-viking/workflows/.github/workflows/nx-sonar-cloud-scan.yml@main
-    needs: [nx-affected, check-has-changed]
+    needs: [install-node-modules, check-has-changed]
     if: needs.check-has-changed.outputs.layout-changed == 'true'
     with:
       sonar-project: chill-viking-org_ng-libs-cv-layout
