@@ -1,4 +1,6 @@
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened]
@@ -18,6 +20,20 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
 
-  use-workflow:
+  nx-affected:
     uses: chill-viking/workflows/.github/workflows/nx-test-affected.yml@main
     name: Test affected
+
+  sonar-cloud-demo-app:
+    name: test, build, and publish
+    uses: chill-viking/workflows/.github/workflows/nx-sonar-cloud-scan.yml@main
+    needs: nx-affected
+    with:
+      sonar-project: chill-viking-org_ng-libs-demo-app
+      project-location: apps/chill-viking-ng-libs
+      project-name: chill-viking-ng-libs
+      config-location: tsconfig.app.json
+      package-location: ./apps/chill-viking-ng-libs
+    secrets:
+      sonar-token: ${{ secrets.DEMO_APP_SONAR_TOKEN }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
