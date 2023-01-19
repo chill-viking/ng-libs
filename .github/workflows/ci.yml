@@ -1,0 +1,91 @@
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+name: CI
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  check-has-changed:
+    runs-on: ubuntu-latest
+    name: Check for Changes
+    outputs:
+      layout-changed: ${{ steps.libs-layout-check.outputs.any_changed }}
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # OR "2" -> To retrieve the preceding commit.
+
+      - name: Get changed files in the libs/layout folder
+        id: libs-layout-check
+        uses: tj-actions/changed-files@v35
+        with:
+          files: libs/layout/**
+
+      - name: Run step if any file(s) in the docs folder change
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        run: |
+          echo "One or more files in the docs folder has changed."
+          echo "List all the files that have changed: ${{ steps.changed-files-specific.outputs.all_changed_files }}"
+
+  install-node-modules:
+    runs-on: ubuntu-latest
+    name: Install Dependencies
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: chill-viking/workflows/actions/npm-ci@main
+        name: Install dependencies w/ caching
+
+  output-context:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
+  nx-affected:
+    uses: chill-viking/workflows/.github/workflows/nx-test-affected.yml@main
+    name: Test affected
+    needs: [install-node-modules]
+
+  sonar-cloud-demo-app:
+    name: Publish SonarCloud for Demo App
+    uses: chill-viking/workflows/.github/workflows/nx-sonar-cloud-scan.yml@main
+    needs: install-node-modules
+    with:
+      sonar-project: chill-viking-org_ng-libs-demo-app
+      project-location: apps/chill-viking-ng-libs
+      project-name: chill-viking-ng-libs
+      config-location: tsconfig.app.json
+      package-location: ./apps/chill-viking-ng-libs
+    secrets:
+      sonar-token: ${{ secrets.DEMO_APP_SONAR_TOKEN }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  sonar-cloud-layout:
+    name: Publish SonarCloud for layout
+    uses: chill-viking/workflows/.github/workflows/nx-sonar-cloud-scan.yml@main
+    needs: [install-node-modules, check-has-changed]
+    if: needs.check-has-changed.outputs.layout-changed == 'true'
+    with:
+      sonar-project: chill-viking-org_ng-libs-cv-layout
+      project-location: libs/layout
+      project-name: layout
+      config-location: tsconfig.lib.json
+      package-location: ./libs/layout/
+    secrets:
+      sonar-token: ${{ secrets.LAYOUT_LIB_SONAR_TOKEN }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
