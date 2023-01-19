@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/chill-viking/ng-libs/compare/layout-v2.0.0...layout-v2.0.1) (2023-01-19)
+
+
+### Bug Fixes
+
+* **layout:** update package metadata ([#70](https://github.com/chill-viking/ng-libs/issues/70)) ([757061e](https://github.com/chill-viking/ng-libs/commit/757061e47513ff6c67cab8ef1082db680a68f3bc))
+
 ## [2.0.0](https://github.com/chill-viking/ng-libs/compare/layout-v1.0.0...layout-v2.0.0) (2023-01-06)
 
 
