@@ -1,0 +1,22 @@
+on:
+  push:
+    branches: ['main']
+
+name: CD
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/swa-deploy.yml
+    name: SWA
+    with:
+      output_location: dist/apps/chill-viking-ng-libs
+    secrets:
+      swa_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ASHY_FLOWER_0950BD703 }}
+      git_token: ${{ secrets.GITHUB_TOKEN }}
+
+  release-please:
+    uses: ./.github/workflows/release-please.yml
+    name: Release
+    secrets:
+      git_token: ${{ secrets.GITHUB_TOKEN }}
+      sonar_token: ${{ secrets.ORG_SONAR_TOKEN }}
