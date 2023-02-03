@@ -28,7 +28,7 @@ jobs:
   publish-to-sonar-cloud:
     uses: chill-viking/workflows/.github/workflows/nx-sonar-cloud-all.yml@main
     name: Coverage Report
-    if: github.event.action != 'closed' && secrets.ORG_SONAR_TOKEN != null
+    if: github.event.action != 'closed'
     needs: cache-deps
     secrets:
       sonar-token: ${{ secrets.ORG_SONAR_TOKEN }}
@@ -38,7 +38,7 @@ jobs:
     uses: ./.github/workflows/swa-deploy.yml
     name: SWA
     needs: cache-deps
-    if: always() && secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ASHY_FLOWER_0950BD703 != null
+    if: always()
     with:
       output_location: dist/apps/chill-viking-ng-libs
     secrets:
