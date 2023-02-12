@@ -4,9 +4,11 @@ on:
 
 name: CD
 
+permissions: write-all
+
 jobs:
   deploy:
-    uses: ./.github/workflows/swa-deploy.yml
+    uses: chill-viking/workflows/.github/workflows/swa-deploy.yml@main
     name: SWA
     with:
       output_location: dist/apps/chill-viking-ng-libs
@@ -18,5 +20,5 @@ jobs:
     uses: ./.github/workflows/release-please.yml
     name: Release
     secrets:
-      git_token: ${{ secrets.GITHUB_TOKEN }}
+      git_token: ${{ secrets.ORG_PAT }}
       sonar_token: ${{ secrets.ORG_SONAR_TOKEN }}

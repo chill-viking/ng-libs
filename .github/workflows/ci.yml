@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: chill-viking/workflows/actions/npm-ci@main
+      - uses: chill-viking/npm-ci@v1
         name: Install dependencies w/ caching
 
   nx-affected:
@@ -35,7 +35,7 @@ jobs:
       github-token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
-    uses: ./.github/workflows/swa-deploy.yml
+    uses: chill-viking/workflows/.github/workflows/swa-deploy.yml@main
     name: SWA
     needs: cache-deps
     if: always()
