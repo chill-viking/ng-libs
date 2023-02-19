@@ -110,7 +110,7 @@ jobs:
           }
           else
           {
-            $changed = @('${{ steps.changed-files.outputs.added_files }}' | ConvertFrom-Json)
+            $changed = '${{ steps.changed-files.outputs.added_files }}' -split ' '
             # foreach folder in folders where can find in changed$ adds to folders
             Write-output "Folders: $folders"
             Write-output "Changed: $changed"
