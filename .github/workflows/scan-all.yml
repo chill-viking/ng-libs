@@ -111,11 +111,20 @@ jobs:
           else
           {
             $changed = '${{ steps.changed-files.outputs.added_files }}'
-            # foreach folder in folders where can find in changed$ adds to folders
-            Write-output "Folders: $folders"
-            Write-output "Changed: $changed"
-
             $newFolders = $folders | Where-Object { $changed -like "*$_*" }
+            if ($newFolders.Count -gt 0)
+            {
+              Write-Output "********************* Information *********************"
+              Write-Output "   Changed folders found, publishing to SonarCloud"
+              Write-Output "*******************************************************"
+            }
+            else
+            {
+              Write-Output "********************* Information *********************"
+              Write-Output "   No changed folders found, skipping SonarCloud"
+              Write-Output "*******************************************************"
+            }
+
             $folders = $newFolders
           }
 
