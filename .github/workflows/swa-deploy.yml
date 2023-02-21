@@ -24,9 +24,11 @@ on:
       files_for_deploy:
         description: 'Files to deploy'
         type: string
-        default:
-          - '*.ts'
-          - '*.html'
+        default: "*.ts,*.html"
+      files_separator:
+        description: 'Separator for files_for_deploy'
+        type: string
+        default: ","
     secrets:
       swa_token:
         description: 'Azure Static Web Apps API Token'
@@ -51,9 +53,10 @@ jobs:
 
       - name: Check If Change Needed
         id: check
-        uses: chill-viking/check-if-change-needed@v1
+        uses: tj-actions/changed-files@v35
         with:
-          files_for_deploy: ${{ inputs.files_for_deploy }}
+          files: ${{ inputs.files_for_deploy }}
+          files_separator: ${{ inputs.files_separator }}
 
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed') && needs.check_if_change_needed.outputs.should_deploy == 'true'
