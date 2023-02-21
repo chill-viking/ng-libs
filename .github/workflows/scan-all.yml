@@ -101,10 +101,10 @@ jobs:
 
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/verify-changed-files@v13
+        uses: tj-actions/changed-files@v35
         with:
           files: ${{ steps.get-folders.outputs.folders_csv }}
-          files-separator: ","
+          files_separator: ","
 
       - shell: pwsh
         name: Resolve Folders
@@ -117,7 +117,7 @@ jobs:
           }
           else
           {
-            $changed = '${{ steps.changed-files.outputs.changed_files }}'
+            $changed = '${{ steps.changed-files.outputs.all_changed_files }}'
             $newFolders = $folders | Where-Object { $changed -like "*$_*" }
             if ($newFolders.Count -gt 0)
             {
