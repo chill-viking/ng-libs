@@ -97,7 +97,9 @@ jobs:
 
       - name: Get changed files
         id: changed-files
-        uses: tj-actions/changed-files@v35
+        uses: tj-actions/verify-changed-files@v13
+        with:
+          files: ${{ steps.get-folders.outputs.folders }}
 
       - shell: pwsh
         name: Resolve Folders
@@ -110,12 +112,14 @@ jobs:
           }
           else
           {
-            $changed = '${{ steps.changed-files.outputs.added_files }} ${{ steps.changed-files.outputs.changed_files }}'
+            $changed = '${{ steps.changed-files.outputs.changed_files }}'
             $newFolders = $folders | Where-Object { $changed -like "*$_*" }
             if ($newFolders.Count -gt 0)
             {
               Write-Output "********************* Information *********************"
               Write-Output "   Changed folders found, publishing to SonarCloud"
+              Write-Output "   Folders to be scanned"
+              $newFolders | ForEach-Object { Write-Output "   - $_" }
               Write-Output "*******************************************************"
             }
             else
