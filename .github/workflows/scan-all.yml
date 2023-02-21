@@ -100,7 +100,7 @@ jobs:
         uses: tj-actions/verify-changed-files@v13
         with:
           # output steps.get-folders.outputs.folders as array to files input
-          files: toJSON(${{ steps.get-folders.outputs.folders }})
+          files: ${{ toJSON(steps.get-folders.outputs.folders) }}
 
       - shell: pwsh
         name: Resolve Folders
