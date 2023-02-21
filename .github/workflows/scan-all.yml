@@ -135,7 +135,7 @@ jobs:
   main:
     name: publish to sonarcloud
     needs: prepare-matrix
-    if: needs.prepare-matrix.outputs.matrix != '[]'
+    if: needs.prepare-matrix.outputs.matrix != '[]' && needs.prepare-matrix.outputs.matrix != 'null'
     defaults:
       run:
         shell: pwsh
