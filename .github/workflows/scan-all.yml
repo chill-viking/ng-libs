@@ -52,6 +52,10 @@ jobs:
           Write-Output "output=${serialized}"
           Write-Output "folders=$serialized" >> $env:GITHUB_OUTPUT
 
+          $csv = $folders -join ","
+          Write-Output "csv output=${csv}"
+          Write-Output "folders_csv=${csv}" >> $env:GITHUB_OUTPUT
+
       - shell: pwsh
         name: Prepare Release Folders
         if: ${{ inputs.is-release }}
@@ -94,15 +98,12 @@ jobs:
           $serialized = ConvertTo-Json -InputObject $resolvedFolders -Compress
           Write-Output "output=${serialized}"
           Write-Output "folders=$serialized" >> $env:GITHUB_OUTPUT
-          $csv = $resolvedFolders -join ","
-          Write-Output "csv output=${csv}"
-          Write-Output "folders_csv=${csv}" >> $env:GITHUB_OUTPUT
 
       - name: Get changed files
         id: changed-files
         uses: tj-actions/verify-changed-files@v13
         with:
-          files: ${{ steps.release-folders.outputs.folders_csv }}
+          files: ${{ steps.get-folders.outputs.folders_csv }}
           files-separator: ","
 
       - shell: pwsh
