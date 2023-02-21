@@ -110,7 +110,7 @@ jobs:
           }
           else
           {
-            $changed = '${{ steps.changed-files.outputs.added_files }}'
+            $changed = '${{ steps.changed-files.outputs.added_files }} ${{ steps.changed-files.outputs.changed_files }}'
             $newFolders = $folders | Where-Object { $changed -like "*$_*" }
             if ($newFolders.Count -gt 0)
             {
