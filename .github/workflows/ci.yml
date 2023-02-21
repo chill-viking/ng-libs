@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: chill-viking/npm-ci@v1
+      - uses: chill-viking/npm-ci@latest
         name: Install dependencies w/ caching
 
   nx-affected:
