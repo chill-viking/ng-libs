@@ -95,6 +95,7 @@ jobs:
           Write-Output "output=${serialized}"
           Write-Output "folders=$serialized" >> $env:GITHUB_OUTPUT
           $csv = $resolvedFolders -join ","
+          Write-Output "csv output=${csv}"
           Write-Output "folders_csv=${csv}" >> $env:GITHUB_OUTPUT
 
       - name: Get changed files
