@@ -8,10 +8,11 @@ permissions: write-all
 
 jobs:
   deploy:
-    uses: ./.github/workflows/swa-deploy.yml #chill-viking/workflows/.github/workflows/swa-deploy.yml@main
+    uses: chill-viking/workflows/.github/workflows/swa-deploy.yml@main
     name: SWA
     with:
       output_location: dist/apps/chill-viking-ng-libs
+      always_deploy: true
     secrets:
       swa_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_ASHY_FLOWER_0950BD703 }}
       git_token: ${{ secrets.GITHUB_TOKEN }}

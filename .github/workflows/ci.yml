@@ -35,7 +35,7 @@ jobs:
       github-token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
-    uses: ./.github/workflows/swa-deploy.yml #chill-viking/workflows/.github/workflows/swa-deploy.yml@main
+    uses: chill-viking/workflows/.github/workflows/swa-deploy.yml@main
     name: SWA
     needs: cache-deps
     if: always()
