@@ -9,7 +9,7 @@ export default {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: 'coverage',
+  coverageDirectory: '../../coverage/libs/layout',
   coverageReporters: [['lcov', { projectRoot: 'libs/layout' }]],
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',

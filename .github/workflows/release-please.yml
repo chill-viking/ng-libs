@@ -1,45 +1,42 @@
 on:
-  push:
-    branches: ['main']
+  workflow_call:
+    secrets:
+      sonar_token:
+        description: 'Sonar token'
+        required: true
+      git_token:
+        description: 'GitHub token'
+        required: true
 
 name: release-please
-
-permissions: write-all
 
 jobs:
   release-please:
     runs-on: ubuntu-latest
     outputs:
       releases_created: ${{ steps.release.outputs.releases_created }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
+      paths_released: ${{ steps.release.outputs.paths_released }}
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@v2
-        with:
-          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
-
       - uses: google-github-actions/release-please-action@v3
-        id: release # possibly this was missing...
+        id: release
         with:
           command: manifest
-          token: ${{ secrets.ORG_PAT }}
-          default-branch: 'main'
-
-  publish-packages:
-    runs-on: ubuntu-latest
-    needs: release-please
-    steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@v2
-        with:
-          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
-
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+          token: ${{ secrets.git_token }}
+          default-branch: main
 
       - name: Dump release-please
         env:
-          RELEASE_CONTEXT: ${{ toJson(needs.release-please) }}
+          RELEASE_CONTEXT: ${{ toJson(steps.release) }}
         run: echo "$RELEASE_CONTEXT"
+
+  publish-to-sonar-cloud:
+    needs: release-please
+    uses: chill-viking/workflows/.github/workflows/nx-sonar-cloud-all.yml@main
+    name: Coverage Report
+    if: needs.release-please.outputs.releases_created == 'true'
+    with:
+      is-release: true
+      released-paths: ${{ needs.release-please.outputs.paths_released }}
+    secrets:
+      sonar-token: ${{ secrets.sonar_token }}
+      github-token: ${{ secrets.git_token }}
