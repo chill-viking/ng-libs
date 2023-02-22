@@ -26,7 +26,7 @@ jobs:
     needs: cache-deps
 
   publish-to-sonar-cloud:
-    uses: ./.github/workflows/scan-all.yml # chill-viking/workflows/.github/workflows/nx-sonar-cloud-all.yml@main
+    uses: chill-viking/workflows/.github/workflows/nx-sonar-cloud-all.yml@main
     name: Coverage Report
     if: github.event.action != 'closed'
     needs: cache-deps
