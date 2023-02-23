@@ -119,9 +119,7 @@ jobs:
 
       - uses: ./actions/run-npm-publish
         name: Publish to NPM
-        if: >
-          ${{ steps.changed-files.outputs.any_changed }} == 'true'
-          || ${{ inputs.alpha_build }} == 'false'
+        if: ${{ steps.changed-files.outputs.any_changed == 'true' || inputs.alpha_build == 'false' }}
         with:
           npm-auth-token: ${{ secrets.npm_token }}
           project-name: ${{ inputs.nx_project }}
