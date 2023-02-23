@@ -23,3 +23,18 @@ jobs:
     secrets:
       git_token: ${{ secrets.ORG_PAT }}
       sonar_token: ${{ secrets.ORG_SONAR_TOKEN }}
+
+  publish-layout:
+    uses: ./.github/workflows/npm-publish.yml
+    needs: release-please
+    name: Publish Alpha build
+    if: >
+      needs.release-please.outputs.releases_created == 'true'
+      && contains(needs.release-please.outputs.paths_released, 'libs/layout')
+    with:
+      nx_project: layout
+      project_path: libs/layout
+      alpha_build: false
+    secrets:
+      npm_token: ${{ secrets.ORG_NPM_TOKEN }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}

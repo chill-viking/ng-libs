@@ -40,6 +40,21 @@ jobs:
       sonar-token: ${{ secrets.ORG_SONAR_TOKEN }}
       github-token: ${{ secrets.GITHUB_TOKEN }}
 
+  publish-alpha:
+    uses: ./.github/workflows/npm-publish.yml
+    name: Publish Layout Alpha build
+    if: >
+      github.event.action != 'closed'
+      && github.event_name != 'push'
+      && github.event_name != 'merge_group'
+    needs: cache-deps
+    with:
+      nx_project: layout
+      project_path: libs/layout
+    secrets:
+      npm_token: ${{ secrets.ORG_NPM_TOKEN }}
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+
   deploy:
     uses: chill-viking/workflows/.github/workflows/swa-deploy.yml@main
     name: SWA

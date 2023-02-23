@@ -1,0 +1,129 @@
+on:
+  workflow_call:
+    inputs:
+      nx_project:
+        description: 'Nx project to publish'
+        type: string
+        required: true
+      project_path:
+        description: 'Path to project'
+        type: string
+        required: true
+      working_directory:
+        description: 'Directory of nx workspace'
+        type: string
+        default: './'
+      dist_location:
+        description: 'Location library is built to'
+        type: string
+        default: 'dist'
+      alpha_build:
+        description: 'Is this an alpha build?'
+        type: boolean
+        default: true
+      egress_policy:
+        description: 'Egress policy'
+        type: string
+        default: 'audit'
+      debug:
+        description: 'Debug flag'
+        type: boolean
+        default: false
+    secrets:
+      npm_token:
+        description: 'NPM token'
+        required: true
+      git_token:
+        description: 'GitHub token'
+        required: true
+
+name: nx-npm-publish
+
+permissions: read-all
+
+jobs:
+  publish-lib:
+    name: publish alpha @chill-viking/layout
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@v2
+        with:
+          egress-policy: ${{ inputs.egress_policy }}
+
+      - uses: actions/checkout@v3
+        name: 'Checkout code'
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+        with:
+          files: "**${{ inputs.project_path }}**"
+
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@main
+        with:
+          path: ${{ inputs.working_directory }}${{ inputs.project_path }}
+
+      - name: Bump major for alpha version
+        id: bumped-version
+        if: ${{ inputs.alpha_build }}
+        run: |
+          a=${{ steps.package-version.outputs.current-version }}
+          v=(${a//\./ })
+          x=${v[0]}
+          major=$(($x + 1))
+          minor=${v[1]}
+          patch=${v[2]}
+          newVersion="$major.$minor.$patch"
+          echo "version=${newVersion}" >> $GITHUB_OUTPUT
+
+      - name: Create alpha version
+        id: alpha-version
+        if: ${{ inputs.alpha_build }}
+        run: |
+          newVersion=${{ steps.bumped-version.outputs.version }}
+          num=${{ github.run_number }}
+          echo "version=${newVersion}-alpha.${num}" >> $GITHUB_OUTPUT
+
+      - name: Version to publish
+        id: version-to-publish
+        run: |
+          if [ ${{ inputs.alpha_build }} = true ]; then
+            echo "version=${{ steps.alpha-version.outputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${{ steps.package-version.outputs.current-version }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Resolve Dist Location
+        id: dist-location
+        run: |
+          if [ ${{ inputs.dist_location }} = 'dist' ]; then
+            echo "path=${{ inputs.working_directory }}${{ inputs.dist_location }}/${{ inputs.project_path }}" >> $GITHUB_OUTPUT
+          else
+            echo "path=${{ inputs.dist_location }}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Resolve tag
+        id: tag
+        run: |
+          if [ ${{ inputs.alpha_build }} = true ]; then
+            echo "tag=alpha" >> $GITHUB_OUTPUT
+          else
+            echo "tag=latest" >> $GITHUB_OUTPUT
+          fi
+
+      - uses: ./actions/run-npm-publish
+        name: Publish to NPM
+        if: >
+          ${{ steps.changed-files.outputs.any_modified == 'true' }}
+          || ${{ inputs.alpha_build == 'false' }}
+        with:
+          npm-auth-token: ${{ secrets.npm_token }}
+          project-name: ${{ inputs.nx_project }}
+          project-location: ${{ inputs.working_directory }}${{ inputs.project_path }}
+          project-dist-location: ${{ steps.dist-location.outputs.path }}
+          project-version: ${{ steps.version-to-publish.outputs.version }}
+          project-tag: ${{ steps.tag.outputs.tag }}
+          working-directory: ${{ inputs.working_directory }}
