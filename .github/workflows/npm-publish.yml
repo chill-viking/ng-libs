@@ -115,12 +115,12 @@ jobs:
       - name: Dump Changed Files
         if: ${{ inputs.debug }}
         run: |
-          echo OUTPUTS: ${{ toJSON(steps.changed-files.outputs) }}
+          echo OUTPUTS: '${{ toJSON(steps.changed-files.outputs) }}'
 
       - uses: ./actions/run-npm-publish
         name: Publish to NPM
         if: >
-          ${{ steps.changed-files.outputs.any_modified == 'true' }}
+          ${{ steps.changed-files.outputs.any_changed }} == 'true'
           || ${{ inputs.alpha_build == 'false' }}
         with:
           npm-auth-token: ${{ secrets.npm_token }}
