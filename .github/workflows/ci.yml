@@ -51,6 +51,7 @@ jobs:
     with:
       nx_project: layout
       project_path: libs/layout
+      debug: true
     secrets:
       npm_token: ${{ secrets.ORG_NPM_TOKEN }}
       git_token: ${{ secrets.GITHUB_TOKEN }}

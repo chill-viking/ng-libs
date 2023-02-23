@@ -112,6 +112,11 @@ jobs:
             echo "tag=latest" >> $GITHUB_OUTPUT
           fi
 
+      - name: Dump Changed Files
+        if: ${{ inputs.debug }}
+        run: |
+          echo OUTPUTS: ${{ toJSON(steps.changed-files.outputs) }}
+
       - uses: ./actions/run-npm-publish
         name: Publish to NPM
         if: >
@@ -124,4 +129,4 @@ jobs:
           project-dist-location: ${{ steps.dist-location.outputs.path }}
           project-version: ${{ steps.version-to-publish.outputs.version }}
           project-tag: ${{ steps.tag.outputs.tag }}
-          working-directory: ${{ inputs.working_directory }}
+          working_directory: ${{ inputs.working_directory }}
