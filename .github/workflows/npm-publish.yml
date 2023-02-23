@@ -39,8 +39,6 @@ on:
 
 name: nx-npm-publish
 
-permissions: read-all
-
 jobs:
   publish-lib:
     name: publish alpha @chill-viking/layout
