@@ -37,4 +37,4 @@ jobs:
       alpha_build: false
     secrets:
       npm_token: ${{ secrets.ORG_NPM_TOKEN }}
-      github-token: ${{ secrets.GITHUB_TOKEN }}
+      git_token: ${{ secrets.GITHUB_TOKEN }}

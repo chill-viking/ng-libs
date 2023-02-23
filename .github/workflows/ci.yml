@@ -53,7 +53,7 @@ jobs:
       project_path: libs/layout
     secrets:
       npm_token: ${{ secrets.ORG_NPM_TOKEN }}
-      github-token: ${{ secrets.GITHUB_TOKEN }}
+      git_token: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     uses: chill-viking/workflows/.github/workflows/swa-deploy.yml@main
