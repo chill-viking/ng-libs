@@ -1,7 +1,10 @@
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
     types: [opened, synchronize, reopened, closed]
+  merge_group:
 
 name: CI
 
@@ -28,7 +31,10 @@ jobs:
   publish-to-sonar-cloud:
     uses: chill-viking/workflows/.github/workflows/nx-sonar-cloud-all.yml@main
     name: Coverage Report
-    if: github.event.action != 'closed'
+    if: >
+      github.event.action != 'closed'
+      && github.event_name != 'push'
+      && github.event_name != 'merge_group'
     needs: cache-deps
     secrets:
       sonar-token: ${{ secrets.ORG_SONAR_TOKEN }}
@@ -38,7 +44,10 @@ jobs:
     uses: chill-viking/workflows/.github/workflows/swa-deploy.yml@main
     name: SWA
     needs: cache-deps
-    if: always()
+    if: >
+      always()
+      && github.event_name != 'push'
+      && github.event_name != 'merge_group'
     with:
       output_location: dist/apps/chill-viking-ng-libs
     secrets:
