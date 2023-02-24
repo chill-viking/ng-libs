@@ -35,6 +35,10 @@ inputs:
     description: 'A build of the project to be published has already been done'
     required: false
     default: 'false'
+  working_directory:
+    description: 'Directory of nx workspace'
+    required: false
+    default: './'
 
 runs:
   using: 'composite'
@@ -51,9 +55,11 @@ runs:
         npm version ${{ inputs.project-version }} --no-git-tag-version
         npm version
 
-    - uses: chill-viking/workflows/actions/npm-ci@main
+    - uses: chill-viking/npm-ci@latest
       if: inputs.build-completed == 'false'
       name: Install dependencies
+      with:
+        working_directory: ${{ inputs.working_directory }}
 
     - uses: chill-viking/workflows/actions/nx-test-and-build@main
       if: inputs.build-completed == 'false'
@@ -69,7 +75,7 @@ runs:
 
     - shell: pwsh
       name: Publish Package
-      working-directory: ./${{ inputs.project-dist-location }}
+      working-directory: ${{ inputs.project-dist-location }}
       run: |
         npm publish --access public --tag ${{ inputs.project-tag }}
       env:
