@@ -27,9 +27,11 @@ npm install @chill-viking/layout
 
 ## Usage
 
-### Import
+There are multiple ways to use this package.
 
-To use this package in your Angular project, import it in your module like so:
+### Importing the module alone
+
+The first is to import the `ChillVikingLayoutModule` alone into your module:
 
 ```typescript
 import { ChillVikingLayoutModule } from '@chill-viking/layout';
@@ -37,14 +39,81 @@ import { ChillVikingLayoutModule } from '@chill-viking/layout';
 @NgModule({
   imports: [ChillVikingLayoutModule],
 })
-export class MyModule {}
+export class MyModule {
+}
+```
+
+Using this approach, you will have to provide data for the header and/or footer of the layout using
+the `[data]` input of the [`cvLayout`](#template) component.
+And will require you to provide the observable to use for setting the title of the header.
+
+### Importing the module with `forRoot`
+
+The second is to import the `ChillVikingLayoutModule` using the `ChillVikingLayoutModule.forRoot()` method into your
+module:
+
+```typescript
+import { ChillVikingLayoutModule } from '@chill-viking/layout';
+
+@NgModule({
+  imports: [ChillVikingLayoutModule.forRoot()],
+})
+export class MyModule {
+}
+```
+
+Using this approach, `[data]` input for [`cvLayout`](#template) component will be provided by
+the [`LayoutContextService`](#layoutcontextservice).
+Instead, the context will be provided by the `LayoutContextService`, which is controllable via `LayoutOptions` which can
+be passed in as an argument for `forRoot`.
+
+See
+
+### Providing services using `provideServices` for standalone components
+
+The third is, when using a standalone component, to provide the needed services using
+the `ChillVikingLayoutModule.provideServices()` method in `bootstrapApplication` providers:
+
+```typescript
+// main.ts
+bootstrapApplication(RootComponent, {
+  providers: [
+    ChillVikingLayoutModule.provideServices(),
+  ],
+});
+```
+
+And importing the `ChillVikingLayoutModule` into the standalone component to use the `cvLayout` component:
+
+```typescript
+// standalone-root.component.ts
+import { ChillVikingLayoutModule } from '@chill-viking/layout';
+
+@Component({
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    ChillVikingLayoutModule, // <-- This is needed to access cv-layout component
+  ],
+  template: `
+    <cv-layout>
+      <router-outlet></router-outlet>
+    </cv-layout>
+  `,
+  styles: [],
+})
+export class RootComponent {
+}
 ```
 
 ### Template
 
-Then, you can use the `cvLayout` component in your templates and pass in data for the header and footer using the `[data]` attribute:
+Then, you can use the `cvLayout` component in your templates and pass in data for the header and footer using
+the `[data]` attribute:
 
 ```html
+
 <cv-layout
   [data]="{ header: { title$: title$ }, footer: { copyRightHolder: 'Chill Viking' } }"
 >
@@ -128,7 +197,7 @@ You can then bind the `title$` property to the `cvLayout` component using the `[
 The default for the `[data]` input of the component is:
 
 ```typescript
-{
+const defaults = {
   header: {
     title$: of('[data] not provided'),
   },
@@ -140,9 +209,37 @@ The `header` object is always included in the `data` input and has a default `ti
 property of `of('[data] not provided')` creating a header with `[data] not provided`.
 The `footer` object is optional and has a default value of `undefined`.
 
+### Services
+
+#### LayoutContextService
+
+To provide this service, see [Importing the module with `forRoot`](#importing-the-module-with-forroot),
+or [Providing services using `provideServices` for standalone components](#providing-services-using-provideservices-for-standalone-components).
+
+The `LayoutContextService` is used to provide the data for the header and footer of the layout. And has the following
+methods:
+
+| Method                          | Description                   |
+|---------------------------------|-------------------------------|
+| `setHeaderTitle(title: string)` | Sets the title of the header. |
+
+##### Configuring the `LayoutContextService`
+
+The `LayoutContextService` can be configured by passing in an `LayoutOptions` object to the `forRoot`
+or `provideServices` methods.
+
+| Property            | Type      | Default | Description                                                                                                                    |
+|---------------------|-----------|---------|--------------------------------------------------------------------------------------------------------------------------------|
+| `updatePageTitle`   | `boolean` | `false` | Whether or not to update the page title when the header title is set.                                                          |
+| `pageTitleTemplate` | `string`  | `''`    | The template to use when updating the page title. e.g. `"My Page > {title}"`, will replace `{title}` with the title being set. |
+| `defaultTitle`      | `string`  | `''`    | The default title to use when the header title is not defined.                                                                 |
+| `copyrightHolder`   | `string`  | `''`    | The copyright holder to use, which will define the footer and allow for using `cvFooter` directive.                            |
+
 ## Contributing
 
-We welcome contributions to this package! If you have an idea for a fun feature, feel free to [open a pull request](https://github.com/chill-viking/ng-libs), [create an issue](https://github.com/chill-viking/ng-libs/issues/new/choose), or [start a discussion](https://github.com/orgs/chill-viking/discussions/categories/ideas).
+We welcome contributions to this package! If you have an idea for a fun feature, feel free
+to [open a pull request](https://github.com/chill-viking/ng-libs), [create an issue](https://github.com/chill-viking/ng-libs/issues/new/choose),
+or [start a discussion](https://github.com/orgs/chill-viking/discussions/categories/ideas).
 
 ## License
 
