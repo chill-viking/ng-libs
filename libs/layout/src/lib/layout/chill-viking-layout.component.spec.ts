@@ -1,10 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {
-  ChillVikingLayoutComponent,
-  FooterDirective,
-} from '@chill-viking/layout';
-import { MockInstance, MockService } from 'ng-mocks';
-import { first } from 'rxjs';
+import { ChillVikingLayoutComponent, FooterDirective, LayoutContextService } from '@chill-viking/layout';
+import { MockService } from 'ng-mocks';
+import { first, of } from 'rxjs';
 
 describe('ChillVikingLayoutComponent', () => {
   let component: ChillVikingLayoutComponent;
@@ -12,6 +9,17 @@ describe('ChillVikingLayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: LayoutContextService,
+          useValue: MockService(
+            LayoutContextService,
+            {
+              header: { title$: of('service title') },
+            },
+          ),
+        },
+      ],
       declarations: [ChillVikingLayoutComponent],
     }).compileComponents();
   });
@@ -26,11 +34,11 @@ describe('ChillVikingLayoutComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should default [data]', (done) => {
+  it('should default [data] using LayoutContextService', (done) => {
     expect(component.data.header).toBeTruthy();
 
     component.data.header.title$.pipe(first()).subscribe((defaultTitle) => {
-      expect(defaultTitle).toContain('[data] not supplied');
+      expect(defaultTitle).toContain('service title');
       done();
     });
   });
@@ -47,7 +55,6 @@ describe('ChillVikingLayoutComponent', () => {
       describe('and [data.footer] is undefined', () => {
         it('should return false', () => {
           expect(component.data.footer).toBeUndefined();
-          // fixture.detectChanges();
           expect(component.showFooter).toBeFalsy();
         });
       });
@@ -57,7 +64,6 @@ describe('ChillVikingLayoutComponent', () => {
           component.data.footer = {
             copyrightHolder: 'hello',
           };
-          // fixture.detectChanges();
           expect(component.showFooter).toEqual(combinedResult);
         });
       });
