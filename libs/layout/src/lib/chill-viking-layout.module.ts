@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { EnvironmentProviders, ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import { FooterDirective, HeaderDirective } from './directives';
 import { ChillVikingLayoutComponent } from './layout/chill-viking-layout.component';
 import { LayoutContextService } from './services/layout-context.service';
@@ -12,13 +12,17 @@ import { defaultOptions, LAYOUT_OPTIONS } from './injection-tokens';
   exports: [ChillVikingLayoutComponent, HeaderDirective, FooterDirective],
 })
 export class ChillVikingLayoutModule {
-  static forRoot(options?: LayoutOptions) {
+  static forRoot(options?: LayoutOptions): ModuleWithProviders<ChillVikingLayoutModule> {
     return {
       ngModule: ChillVikingLayoutModule,
-      providers: [
-        LayoutContextService,
-        { provide: LAYOUT_OPTIONS, useValue: options ?? defaultOptions },
-      ],
+      providers: this.provideServices(options),
     };
+  }
+
+  static provideServices(options?: LayoutOptions): Array<Provider | EnvironmentProviders> {
+    return [
+      { provide: LAYOUT_OPTIONS, useValue: options ?? defaultOptions },
+      LayoutContextService,
+    ];
   }
 }

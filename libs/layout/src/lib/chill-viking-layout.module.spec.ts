@@ -32,7 +32,7 @@ describe('ChillVikingLayoutModule', () => {
     });
   });
 
-  describe('forRoot', () => {
+  describe('forRoot and provideServices', () => {
     let layoutContextSvc: LayoutContextService;
 
     const forRootBeforeEach = (
