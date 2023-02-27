@@ -4,11 +4,11 @@
   "license": "MIT",
   "scripts": {
     "ng": "nx",
-    "postinstall": "node ./decorate-angular-cli.js",
     "start": "nx serve",
     "build": "nx build",
     "test": "nx test",
-    "test-affected": "nx affected --target=test"
+    "test-affected": "nx affected --target=test",
+    "format:write": "nx format:write"
   },
   "private": true,
   "dependencies": {

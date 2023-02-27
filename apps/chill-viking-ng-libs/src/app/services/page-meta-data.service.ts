@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
-import { Meta, Title } from '@angular/platform-browser';
-import {
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  TitleStrategy,
-} from '@angular/router';
+import { Meta } from '@angular/platform-browser';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, TitleStrategy } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { LayoutContextService } from '@chill-viking/layout';
 
 @Injectable()
 export class PageMetaDataService extends TitleStrategy {
-  constructor(private readonly _title: Title, private readonly _meta: Meta) {
+  private _subTitleSubject = new BehaviorSubject<string>('');
+  subTitle$ = this._subTitleSubject.asObservable();
+
+  constructor(
+    private readonly _layoutContextSvc: LayoutContextService,
+    private readonly _meta: Meta,
+  ) {
     super();
   }
 
   private getPrimaryNavigationChildren({
-    root,
-  }: Partial<RouterStateSnapshot>): ActivatedRouteSnapshot[] {
+                                         root,
+                                       }: Partial<RouterStateSnapshot>): ActivatedRouteSnapshot[] {
     const result: ActivatedRouteSnapshot[] = [];
     let primarySnapshot = root?.children.find((c) => c.outlet === 'primary');
     while (primarySnapshot) {
@@ -29,13 +33,13 @@ export class PageMetaDataService extends TitleStrategy {
 
   private resolveChildTitles(
     activatedRootSnapshot: ActivatedRouteSnapshot,
-  ): string[] {
+  ): Array<{ title: string; subTitle: string }> {
     return this.getPrimaryNavigationChildren({ root: activatedRootSnapshot })
-      .map((snapshot) => snapshot.title ?? '')
-      .filter((title) => title !== '');
+      .map((snapshot) => ({ title: snapshot.title ?? '', subTitle: snapshot.data?.['subTitle'] ?? '' }))
+      .filter(({ title }) => title !== '');
   }
 
-  private makeCurrentTitleFirst(...arr: string[]): string[] {
+  private reverseArray<T>(arr: T[]): T[] {
     return [...arr].reverse();
   }
 
@@ -53,11 +57,11 @@ export class PageMetaDataService extends TitleStrategy {
   }
 
   override updateTitle(snapshot: RouterStateSnapshot): void {
-    const titles = this.makeCurrentTitleFirst(
-      'Chill Viking | ng-libs',
-      ...this.resolveChildTitles(snapshot.root),
-    );
-    this._title.setTitle(titles.join(' | '));
+    const titles = this.reverseArray(
+      this.resolveChildTitles(snapshot.root),
+    )[0];
+    this._layoutContextSvc.updateHeaderTitle(titles?.title ?? '');
+    this._subTitleSubject.next(titles?.subTitle ?? '');
 
     this.updateMeta(snapshot);
   }

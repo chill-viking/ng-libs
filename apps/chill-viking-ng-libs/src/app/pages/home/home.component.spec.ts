@@ -1,8 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent, MockProvider } from 'ng-mocks';
-import { ChillVikingCallToActionComponent } from '../../features/chill-viking-call-to-action/chill-viking-call-to-action.component';
-import { ChillVikingHeaderComponent } from '../../features/chill-viking-header/chill-viking-header.component';
-import { ChillVikingNavigationComponent } from '../../features/chill-viking-navigation/chill-viking-navigation.component';
+import { MockProvider } from 'ng-mocks';
 import { WindowRouterService } from '../../services';
 
 import { HomeComponent } from './home.component';
@@ -14,12 +11,7 @@ describe('HomeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HomeComponent,
-        MockComponent(ChillVikingHeaderComponent),
-        MockComponent(ChillVikingCallToActionComponent),
-        MockComponent(ChillVikingNavigationComponent),
-      ],
+      imports: [HomeComponent],
       providers: [MockProvider(WindowRouterService)],
     }).compileComponents();
 

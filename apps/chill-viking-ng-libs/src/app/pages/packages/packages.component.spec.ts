@@ -1,6 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent } from 'ng-mocks';
-import { ChillVikingNavigationComponent } from '../../features/chill-viking-navigation/chill-viking-navigation.component';
 
 import { PackagesComponent } from './packages.component';
 
@@ -12,7 +10,6 @@ describe('PackagesComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         PackagesComponent,
-        MockComponent(ChillVikingNavigationComponent),
       ],
     }).compileComponents();
 

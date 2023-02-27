@@ -3,8 +3,9 @@ import { RouterFeatures, Routes } from '@angular/router';
 export const rootRoutes: Routes = [
   {
     path: 'home',
-    title: 'Home',
+    title: 'ng-libs | Home',
     data: {
+      subTitle: 'Elevate Your Angular Development with Our Handy npm Packages',
       metaTags: {
         description: [
           'High-quality npm packages for Angular projects.',
@@ -17,8 +18,9 @@ export const rootRoutes: Routes = [
   },
   {
     path: 'packages',
-    title: 'Packages',
+    title: 'ng-libs | Packages',
     data: {
+      subTitle: 'Directory of available packages',
       metaTags: {
         description: [
           'A directory of high-quality npm packages for Angular projects.',
