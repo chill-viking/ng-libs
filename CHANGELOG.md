@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.2.0](https://github.com/chill-viking/ng-libs/compare/ng-libs-v2.1.0...ng-libs-v2.2.0) (2023-02-27)
+
+
+### Features
+
+* add service for layout context ([#116](https://github.com/chill-viking/ng-libs/issues/116)) ([f48ac75](https://github.com/chill-viking/ng-libs/commit/f48ac75dfe70ddcecd663060d92572eb9b9c5dcd))
+* **demo-app:** use layout-context service for context ([f48ac75](https://github.com/chill-viking/ng-libs/commit/f48ac75dfe70ddcecd663060d92572eb9b9c5dcd))
+* **layout:** add static function to provide services ([f48ac75](https://github.com/chill-viking/ng-libs/commit/f48ac75dfe70ddcecd663060d92572eb9b9c5dcd))
+* **layout:** use layout-context service for layout data ([f48ac75](https://github.com/chill-viking/ng-libs/commit/f48ac75dfe70ddcecd663060d92572eb9b9c5dcd))
+
 ## [2.1.0](https://github.com/chill-viking/ng-libs/compare/ng-libs-v2.0.0...ng-libs-v2.1.0) (2023-02-27)
 
 
