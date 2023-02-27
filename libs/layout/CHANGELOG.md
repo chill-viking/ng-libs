@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.0.1](https://github.com/chill-viking/ng-libs/compare/layout-v2.0.0...layout-v2.0.1) (2023-02-27)
+
+
+### Bug Fixes
+
+* **deps:** update angular monorepo to ~15.1.0 ([addf4fd](https://github.com/chill-viking/ng-libs/commit/addf4fd7072523bb3411636edf52196dd501dd49))
+* **deps:** update angular monorepo to ~15.2.0 ([#114](https://github.com/chill-viking/ng-libs/issues/114)) ([2823441](https://github.com/chill-viking/ng-libs/commit/28234418c9de27103d7cfa5065daeb6496f6728e))
+* **layout:** update package metadata ([#70](https://github.com/chill-viking/ng-libs/issues/70)) ([757061e](https://github.com/chill-viking/ng-libs/commit/757061e47513ff6c67cab8ef1082db680a68f3bc))
+
 ## [2.0.0](https://github.com/chill-viking/ng-libs/compare/layout-v1.0.0...layout-v2.0.0) (2023-01-06)
 
 
