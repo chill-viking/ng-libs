@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/chill-viking/ng-libs/compare/ng-libs-v2.2.0...ng-libs-v2.2.1) (2023-03-06)
+
+
+### Bug Fixes
+
+* **deps:** update nrwl monorepo to v15.8.5 ([d15893c](https://github.com/chill-viking/ng-libs/commit/d15893c9dc243f46fcb223e4f46a7da9be5b3e5b))
+
 ## [2.2.0](https://github.com/chill-viking/ng-libs/compare/ng-libs-v2.1.0...ng-libs-v2.2.0) (2023-02-27)
 
 
