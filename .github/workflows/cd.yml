@@ -22,10 +22,10 @@ jobs:
       git_token: ${{ secrets.GITHUB_TOKEN }}
 
   release-please:
-    uses: ./.github/workflows/release-please.yml
+    uses: chill-viking/workflows/.github/workflows/release-manifest-please.yml@main
     name: Release
     secrets:
-      git_token: ${{ secrets.ORG_PAT }}
+      git_pat: ${{ secrets.ORG_PAT }}
       sonar_token: ${{ secrets.ORG_SONAR_TOKEN }}
 
   publish-layout:
