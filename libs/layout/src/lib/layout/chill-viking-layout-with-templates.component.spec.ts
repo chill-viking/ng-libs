@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ChillVikingLayoutModule, LayoutContext } from '@chill-viking/layout';
+import { ChillVikingLayoutModule, LayoutContext } from '../../index';
 import { of } from 'rxjs';
 
 @Component({

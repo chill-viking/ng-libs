@@ -1,10 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-
 // noinspection ES6PreferShortImport
 import { LayoutContextService } from './layout-context.service';
 import { Title } from '@angular/platform-browser';
 import { first, timeout } from 'rxjs';
-import { LAYOUT_OPTIONS, LayoutOptions } from '@chill-viking/layout';
+import { LAYOUT_OPTIONS, LayoutOptions } from '../../index';
 
 describe('LayoutContextService', () => {
   let service: LayoutContextService;

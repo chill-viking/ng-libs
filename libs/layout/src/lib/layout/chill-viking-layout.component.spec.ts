@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ChillVikingLayoutComponent, FooterDirective, LayoutContextService } from '@chill-viking/layout';
+import { ChillVikingLayoutComponent, FooterDirective, LayoutContextService } from '../../index';
 import { MockService } from 'ng-mocks';
 import { first, of } from 'rxjs';
 

@@ -1,5 +1,5 @@
 import { Injector } from '@angular/core';
-import { HeaderDirectiveTemplateContext } from '@chill-viking/layout';
+import { HeaderDirectiveTemplateContext } from '../../index';
 import { MockService } from 'ng-mocks';
 import { HeaderDirective } from './header.directive';
 
