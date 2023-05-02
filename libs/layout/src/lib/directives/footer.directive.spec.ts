@@ -1,5 +1,5 @@
 import { Injector } from '@angular/core';
-import { FooterDirectiveTemplateContext } from '@chill-viking/layout';
+import { FooterDirectiveTemplateContext } from '../../index';
 import { MockService } from 'ng-mocks';
 import { FooterDirective } from './footer.directive';
 

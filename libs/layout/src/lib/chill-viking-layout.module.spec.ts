@@ -5,8 +5,8 @@ import {
   defaultOptions,
   LAYOUT_OPTIONS,
   LayoutContextService,
-  LayoutOptions,
-} from '@chill-viking/layout';
+  LayoutOptions
+} from "../index";
 
 describe('ChillVikingLayoutModule', () => {
   const assertHasLayoutComponent = () => {

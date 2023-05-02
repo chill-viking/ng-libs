@@ -9,7 +9,7 @@ import {
   FooterDirective,
   HeaderDirective,
   LayoutContext,
-} from '@chill-viking/layout';
+} from '../../index';
 import { of } from 'rxjs';
 
 type Immutable<T> = {
