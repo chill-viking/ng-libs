@@ -4,8 +4,8 @@
   "labels": ["dependencies :scroll:", "auto :robot:"],
   "packageRules": [
     {
-      "matchPackagePatterns": ["eslint"],
-      "labels": ["linting :memo:", "auto :robot:"]
+      "labels": ["linting :memo:", "auto :robot:"],
+      "matchPackageNames": ["/eslint/"]
     },
     {
       "matchDepTypes": ["optionalDependencies"],
